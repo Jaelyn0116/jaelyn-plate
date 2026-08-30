@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>제일린이 식판 · Jaelyn's Plate</title>
+<meta name="theme-color" content="#6E9160">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="제일린이 식판">
+<link rel="apple-touch-icon" href="data:image/png;base64,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">
+<link rel="manifest" href="manifest.json">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jua&family=Gaegu:wght@400;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F2F6EC;--card:#FCFDF9;--ink:#33362A;--ink-soft:#6E7362;--line:#E4EADB;
+    --sage:#6E9160;--sage-deep:#4C6B3F;--sage-tint:#E5EEDD;
+    --persimmon:#E67E52;--persimmon-tint:#FBE7DC;--butter:#E7B457;--plum:#B085A0;
+    --sunrise:#EBBF57;--dinner:#CE6E49;--gold:#E3A81E;
+    --font-display:'Jua','Noto Sans KR',sans-serif;
+    --font-hand:'Gaegu','Noto Sans KR',cursive;
+    --font-body:'Noto Sans KR',system-ui,-apple-system,sans-serif;
+    --shadow:0 6px 22px rgba(76,107,63,.10);--shadow-sm:0 2px 8px rgba(76,107,63,.08);--r:18px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--font-body);line-height:1.55;-webkit-font-smoothing:antialiased;padding:env(safe-area-inset-top) 0 0;}
+  .wrap{max-width:640px;margin:0 auto;padding:16px 14px 60px;}
+
+  .hero{background:linear-gradient(135deg,#fff 0%,var(--sage-tint) 100%);border-radius:24px;padding:20px 22px;box-shadow:var(--shadow);position:relative;overflow:hidden;}
+  .hero::after{content:"";position:absolute;right:-30px;top:-30px;width:150px;height:150px;background:radial-gradient(circle at center,var(--persimmon-tint) 0 60%,transparent 62%);opacity:.7;border-radius:50%;}
+  .hero .kicker{font-family:var(--font-hand);font-size:1.05rem;color:var(--sage-deep);font-weight:700;}
+  .hero h1{font-family:var(--font-display);margin:.1em 0 .05em;font-size:1.7rem;letter-spacing:.5px;position:relative;z-index:1;}
+  .hero h1 .en{font-size:.92rem;color:var(--ink-soft);font-family:var(--font-body);font-weight:500;display:block;margin-top:2px;}
+  .today-line{font-family:var(--font-hand);font-size:1.15rem;color:var(--persimmon);font-weight:700;margin-top:6px;position:relative;z-index:1;}
+  .nutri-cap{font-size:.72rem;font-weight:700;color:var(--sage-deep);margin-top:12px;position:relative;z-index:1;}
+  .nutri{display:flex;flex-wrap:wrap;gap:7px;margin-top:6px;position:relative;z-index:1;}
+  .nutri .chip{font-size:.72rem;font-weight:700;padding:5px 10px;border-radius:20px;background:#fff;border:1.5px solid var(--line);color:var(--ink-soft);display:inline-flex;align-items:center;gap:4px;transition:.2s;}
+  .nutri .chip.on{background:var(--sage);border-color:var(--sage);color:#fff;box-shadow:var(--shadow-sm);}
+
+  /* week nav */
+  .weeknav{margin-top:18px;background:var(--card);border-radius:22px;padding:14px;box-shadow:var(--shadow-sm);}
+  .wk-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
+  .wk-head .wkrange{font-family:var(--font-display);font-size:1.05rem;}
+  .wk-head .nav{display:flex;gap:8px;align-items:center;}
+  .wk-head button{border:none;background:var(--sage-tint);color:var(--sage-deep);width:38px;height:38px;border-radius:12px;font-size:1.1rem;cursor:pointer;font-weight:700;transition:.15s;}
+  .wk-head button:hover{background:var(--sage);color:#fff;}
+  .wk-head .today-btn{width:auto;padding:0 14px;font-size:.8rem;font-family:var(--font-body);}
+  .week{display:flex;flex-direction:column;gap:6px;}
+  .weekday{text-align:left;border:1.5px solid var(--line);background:#fff;border-radius:14px;padding:10px 13px;cursor:pointer;font-family:var(--font-body);transition:.15s;display:block;width:100%;}
+  .weekday:hover{border-color:var(--sage);}
+  .weekday.sel{border-color:var(--sage);background:var(--sage-tint);}
+  .weekday.tod{box-shadow:inset 5px 0 0 var(--persimmon);}
+  .weekday .wrow{display:flex;align-items:center;justify-content:space-between;gap:8px;}
+  .weekday .wd{font-weight:700;font-size:.86rem;color:var(--ink);}
+  .weekday .wd .dow{color:var(--ink-soft);font-weight:500;}
+  .weekday .star{font-size:.72rem;font-weight:700;color:#9a7400;background:#FCEFC4;padding:2px 8px;border-radius:12px;white-space:nowrap;}
+  .weekday .wm{font-size:.73rem;color:var(--ink-soft);margin-top:2px;display:flex;flex-wrap:wrap;gap:2px 10px;}
+
+  .plan{margin-top:20px;}
+  .plan-head{display:flex;align-items:baseline;gap:10px;margin-bottom:2px;padding:0 4px;flex-wrap:wrap;}
+  .plan-head .d{font-family:var(--font-display);font-size:1.3rem;}
+  .plan-head .sub{font-size:.85rem;color:var(--ink-soft);}
+  .hint{font-family:var(--font-hand);color:var(--sage-deep);font-size:1rem;padding:0 4px 8px;}
+
+  .timeline{position:relative;padding-left:12px;}
+  .timeline::before{content:"";position:absolute;left:20px;top:14px;bottom:14px;width:2px;background:var(--line);}
+  .slot{position:relative;padding-left:44px;margin-bottom:12px;}
+  .slot .time{position:absolute;left:0;top:14px;width:44px;text-align:center;font-size:.68rem;font-weight:700;color:var(--ink-soft);}
+  .slot .node{position:absolute;left:14px;top:12px;width:15px;height:15px;border-radius:50%;background:#fff;border:3px solid var(--sage);z-index:1;}
+  .slot.milk .node{border-color:var(--butter);}
+  .slot.breakfast .node{border-color:var(--sunrise);}
+  .slot.snack .node{border-color:var(--sage);}
+  .slot.lunch .node{border-color:var(--persimmon);}
+  .slot.dinner .node{border-color:var(--dinner);}
+  .slot.nap .node{border-color:var(--plum);}
+
+  .simple{background:var(--card);border-radius:var(--r);padding:12px 16px;box-shadow:var(--shadow-sm);display:flex;align-items:center;gap:12px;border-left:5px solid var(--butter);}
+  .simple.nap{border-left-color:var(--plum);}
+  .simple .emoji{font-size:1.5rem;}
+  .simple .txt strong{font-family:var(--font-display);font-weight:400;font-size:1rem;}
+  .simple .txt small{display:block;color:var(--ink-soft);font-size:.78rem;}
+
+  details.meal{background:var(--card);border-radius:var(--r);box-shadow:var(--shadow-sm);overflow:hidden;border-left:5px solid var(--sage);transition:box-shadow .2s;}
+  details.meal.breakfast{border-left-color:var(--sunrise);}
+  details.meal.lunch{border-left-color:var(--persimmon);}
+  details.meal.dinner{border-left-color:var(--dinner);}
+  details.meal[open]{box-shadow:var(--shadow);}
+  details.meal summary{list-style:none;cursor:pointer;padding:13px 15px;display:flex;align-items:flex-start;gap:13px;}
+  details.meal summary::-webkit-details-marker{display:none;}
+  .plate{flex:0 0 auto;width:62px;height:62px;border-radius:50%;background:radial-gradient(circle at 50% 40%,#fff 0 68%,var(--sage-tint) 70%);box-shadow:inset 0 0 0 4px #fff, 0 2px 6px rgba(0,0,0,.06);display:flex;align-items:center;justify-content:center;font-size:1.5rem;letter-spacing:-2px;overflow:hidden;}
+  .plate.photo{background-size:cover;background-position:center;font-size:0;box-shadow:inset 0 0 0 3px #fff,0 2px 8px rgba(0,0,0,.15);}
+  .meal-info{flex:1;min-width:0;}
+  .meal-info .cat{font-size:.66rem;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:var(--sage-deep);}
+  .meal.breakfast .cat{color:#b8902e;}.meal.lunch .cat{color:var(--persimmon);}.meal.dinner .cat{color:var(--dinner);}
+  .meal-info .name{font-family:var(--font-display);font-size:1.05rem;line-height:1.2;margin-top:1px;}
+  .meal-info .name .en{font-family:var(--font-body);font-weight:500;color:var(--ink-soft);font-size:.8rem;}
+  .badge{display:inline-block;font-size:.64rem;font-weight:700;background:var(--sunrise);color:#7a5514;padding:2px 8px;border-radius:10px;margin-left:6px;vertical-align:middle;}
+  .meal-info .serve{font-size:.76rem;color:var(--ink-soft);margin-top:3px;}
+  .tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:5px;}
+  .tags .t{font-size:.63rem;font-weight:700;background:var(--sage-tint);color:var(--sage-deep);padding:2px 7px;border-radius:10px;}
+  .eat{display:flex;align-items:center;gap:6px;margin-top:9px;flex-wrap:wrap;}
+  .eat .eatq{font-size:.72rem;color:var(--ink-soft);font-weight:700;margin-right:2px;}
+  .epill{font-size:.75rem;font-weight:700;border:1.5px solid var(--line);background:#fff;color:var(--ink-soft);padding:5px 12px;border-radius:20px;cursor:pointer;font-family:var(--font-body);transition:.15s;}
+  .epill:hover{border-color:var(--sage);}
+  .epill.sel{background:var(--sage);border-color:var(--sage);color:#fff;box-shadow:var(--shadow-sm);}
+  .epill.well.sel{background:var(--gold);border-color:var(--gold);}
+  .mact{display:flex;gap:7px;margin-top:9px;flex-wrap:wrap;}
+  .mbtn{font-size:.7rem;font-weight:700;border:1.5px solid var(--line);background:#fff;color:var(--ink-soft);padding:5px 11px;border-radius:20px;cursor:pointer;transition:.15s;font-family:var(--font-body);}
+  .mbtn:hover{border-color:var(--sage);color:var(--sage-deep);}
+  .mbtn.rm{border-color:var(--persimmon-tint);color:#b5613b;}
+  .chev{flex:0 0 auto;color:var(--ink-soft);font-size:.85rem;transition:transform .2s;margin-top:4px;}
+  details.meal[open] .chev{transform:rotate(180deg);}
+  .recipe{padding:0 16px 16px;border-top:1px dashed var(--line);margin-top:2px;}
+  .recipe h4{font-family:var(--font-display);font-weight:400;font-size:.9rem;margin:14px 0 6px;color:var(--sage-deep);}
+  .recipe ul{margin:0;padding-left:18px;}.recipe ul li{font-size:.83rem;margin-bottom:2px;}
+  .recipe ol{margin:0;padding-left:20px;}.recipe ol li{font-size:.85rem;margin-bottom:6px;}
+  .recipe .usnote{margin-top:10px;background:#EEF3FA;border-radius:12px;padding:8px 12px;font-size:.78rem;color:#3f5a76;font-weight:500;}
+  .recipe .tip{margin-top:10px;background:var(--persimmon-tint);border-radius:12px;padding:9px 12px;font-size:.8rem;color:#8a4a2e;font-weight:500;}
+  .tmrw{margin:8px 4px 0 44px;font-size:.78rem;color:var(--sage-deep);background:var(--sage-tint);border-radius:12px;padding:9px 12px;}
+
+  .panel{margin-top:12px;background:var(--card);border-radius:18px;box-shadow:var(--shadow-sm);overflow:hidden;}
+  .panel>summary{list-style:none;cursor:pointer;padding:14px 18px;font-family:var(--font-display);font-size:1rem;color:var(--sage-deep);display:flex;justify-content:space-between;align-items:center;}
+  .panel>summary::-webkit-details-marker{display:none;}
+  .panel>summary::after{content:"\25BE";color:var(--ink-soft);transition:transform .2s;}
+  .panel[open]>summary::after{transform:rotate(180deg);}
+  .well{padding:0 12px 12px;display:flex;flex-direction:column;gap:6px;}
+  .wellday{text-align:left;border:1.5px solid #F2E4BC;background:#FFFCF3;border-radius:12px;padding:9px 12px;cursor:pointer;font-family:var(--font-body);transition:.15s;display:block;width:100%;}
+  .wellday:hover{border-color:var(--gold);}
+  .wellday .wd{font-weight:700;font-size:.82rem;color:#8a6a00;}
+  .wellitems{display:flex;flex-wrap:wrap;gap:5px;margin-top:5px;}
+  .welltag{font-size:.72rem;background:#FCEFC4;color:#7a5e00;padding:3px 9px;border-radius:12px;}
+  .shop{padding:0 14px 14px;display:flex;flex-wrap:wrap;gap:6px;}
+  .shopnote{width:100%;font-size:.74rem;color:var(--ink-soft);margin:6px 0;}
+  .shopitem{font-size:.78rem;border:1.5px solid var(--line);background:#fff;color:var(--ink);padding:6px 12px;border-radius:20px;cursor:pointer;font-family:var(--font-body);transition:.15s;}
+  .shopitem:hover{border-color:var(--sage);}
+  .shopitem.got{text-decoration:line-through;color:var(--ink-soft);background:var(--sage-tint);border-color:var(--sage-tint);}
+
+  .legend{display:flex;flex-wrap:wrap;gap:10px 16px;margin-top:16px;padding:14px 16px;background:var(--card);border-radius:16px;box-shadow:var(--shadow-sm);}
+  .legend span{font-size:.72rem;color:var(--ink-soft);display:inline-flex;align-items:center;gap:6px;}
+  .legend .sw{width:11px;height:11px;border-radius:50%;display:inline-block;}
+  .install,.settings{margin-top:16px;border-radius:18px;padding:16px 18px;box-shadow:var(--shadow-sm);}
+  .install{background:linear-gradient(135deg,#fff,var(--persimmon-tint));}
+  .settings{background:var(--card);}
+  .install h3,.settings h3{font-family:var(--font-display);font-size:1rem;margin:0 0 6px;color:var(--sage-deep);}
+  .install h3{color:var(--dinner);}
+  .install p{font-size:.8rem;margin:4px 0;color:var(--ink);}
+  .install b{color:var(--sage-deep);}
+  .settings p{font-size:.8rem;margin:4px 0;color:var(--ink-soft);}
+  .sbtns{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;}
+  footer{margin-top:20px;text-align:center;font-size:.74rem;color:var(--ink-soft);line-height:1.6;padding:0 8px;}
+  footer .care{font-family:var(--font-hand);font-size:1.05rem;color:var(--sage-deep);}
+  @media (max-width:480px){.hero h1{font-size:1.45rem;}.plate{width:56px;height:56px;font-size:1.3rem;}}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto;}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <div class="kicker">오늘도 잘 먹자, 제일린아 💚</div>
+    <h1>제일린이 식판<span class="en">Jaelyn's Plate — daily feeding (19 months · salt-free · sugar-free · no cheese yet)</span></h1>
+    <div class="today-line" id="todayLine"></div>
+    <div class="nutri-cap">🌈 <span id="varDay"></span> 영양소 · Food variety</div>
+    <div class="nutri" id="nutriChips"></div>
+  </header>
+
+  <section class="weeknav">
+    <div class="wk-head">
+      <span class="wkrange" id="wkRange">—</span>
+      <div class="nav">
+        <button id="prevWk" aria-label="지난 주">‹</button>
+        <button class="today-btn" id="todayBtn">오늘 · Today</button>
+        <button id="nextWk" aria-label="다음 주">›</button>
+      </div>
+    </div>
+    <div class="week" id="weekBody"></div>
+  </section>
+
+  <section class="plan">
+    <div class="plan-head"><span class="d" id="planDate">—</span><span class="sub" id="planSub"></span></div>
+    <div class="hint">🥄 식사를 눌러 조리법 보기 · 😋 잘 먹으면 눌러 기록 · 📷 사진 · ↻ 메뉴 바꾸기</div>
+    <div class="timeline" id="timeline"></div>
+  </section>
+
+  <details class="panel" id="wellPanel">
+    <summary>⭐ 잘 먹은 날 모아보기 · Days she ate well</summary>
+    <div class="well" id="wellBody"></div>
+  </details>
+
+  <details class="panel" id="shopPanel">
+    <summary>🛒 2주 장보기 · 2-week shopping list</summary>
+    <div class="shop" id="shopBody"></div>
+  </details>
+
+  <div class="legend" id="legend"></div>
+
+  <div class="install">
+    <h3>📲 앱처럼 쓰기 · Use it like an app</h3>
+    <p><b>iPhone (Safari):</b> 공유 <b>⬆️</b> → "홈 화면에 추가 · Add to Home Screen"</p>
+    <p><b>Android (Chrome):</b> ⋮ → "홈 화면에 추가 · Add to Home screen"</p>
+    <p>아이콘이 생기고 전체화면 앱처럼 열려요. 인터넷 없이도 작동해요.</p>
+  </div>
+
+  <div class="settings">
+    <h3>⚙️ 백업 · Backup</h3>
+    <p>사진·먹은 기록을 파일로 저장하고, 폰이 바뀌어도 복원할 수 있어요.</p>
+    <div class="sbtns">
+      <button id="exportBtn" class="mbtn">⬇️ 내보내기 · Export</button>
+      <label class="mbtn" for="importInput" style="cursor:pointer">⬆️ 불러오기 · Import</label>
+      <input type="file" id="importInput" accept="application/json" style="display:none">
+    </div>
+  </div>
+
+  <footer>
+    <div class="care">엄마 Jessy(재서) 화이팅! 🌿</div>
+    Rotating salt-free, sugar-free, cheese-free plan covering iron, protein, calcium, healthy fats & immune-supporting vitamins.<br>
+    General guidance, not a substitute for your pediatrician — check any new food for allergies.
+  </footer>
+</div>
+
+<input type="file" id="photoInput" accept="image/*" style="display:none">
+
+<script>
+/* ===== MEAL BANK (salt-free · sugar-free · cheese-free · US-sourceable) ===== */
+const M = {
+  breakfast:[
+    {id:"bk0",ko:"그릭요거트 볼",en:"Greek yogurt + chia + cinnamon",plate:"🥛🫐",serve:"½컵 + 과일",prep:"3분",tags:["유산균","칼슘","식이섬유"],
+      ing:["플레인 그릭요거트 ½컵","치아씨드 ½작은술","시나몬 조금","블루베리·바나나 등 과일"],
+      steps:["치아씨드를 요거트에 5분 불려요.","시나몬을 살짝 뿌려요.","부드러운 과일을 올려요."],
+      us:"플레인 whole-milk Greek yogurt(무가당)면 어디서든 OK.",tip:"제일린이가 좋아하는 조합 — 치아씨드는 미리 불려 부드럽게."},
+    {id:"bk1",ko:"삶은 계란 + 빵",en:"Boiled egg + bread",plate:"🥚🍞",serve:"계란 1개 + 빵 ½장",prep:"10분",tags:["단백질"],
+      ing:["계란 1개","식빵 ½장"],steps:["계란을 10분 삶아 반으로 썰어요.","빵을 작게 잘라 곁들여요."],
+      us:"저염(low-sodium) 통밀식빵 추천.",tip:"계란은 전날 밤 삶아두면 아침이 빨라요."},
+    {id:"bk2",ko:"땅콩버터 바나나 토스트",en:"Peanut butter & banana toast",plate:"🍞🍌",serve:"빵 ½장 + 바나나 ½개",prep:"5분",tags:["단백질","좋은지방","식이섬유"],
+      ing:["식빵 ½장","무가당 땅콩버터 얇게","바나나 ½개"],steps:["빵을 살짝 구워요.","땅콩버터를 아주 얇게 발라요.","바나나를 올려 작게 잘라요."],
+      us:"natural PB(설탕·소금 무첨가) 사용.",tip:"땅콩버터는 얇게 펴 발라 목막힘을 예방해요."},
+    {id:"bk3",ko:"감자 계란 매쉬",en:"Mashed potato & egg",plate:"🥔🥚",serve:"½공기",prep:"10분",tags:["단백질","식이섬유"],
+      ing:["감자 1개","삶은 계란 1개","우유 1스푼(선택)"],steps:["감자를 쪄서 부드럽게 으깨요.","삶은 계란을 으깨 섞어요.","우유 한 스푼으로 촉촉하게 뭉쳐요."],
+      tip:"제일린이가 잘 먹는 메뉴 — 우유를 조금 넣으면 더 부드러워요."},
+    {id:"bk4",ko:"고구마 + 삶은 계란",en:"Sweet potato + boiled egg",plate:"🍠🥚",serve:"고구마 ½개 + 계란 ½",prep:"5분*",tags:["비타민A","단백질","식이섬유"],
+      ing:["찐 고구마 ½개","삶은 계란 ½개"],steps:["고구마를 으깨거나 말랑한 스틱으로 썰어요.","삶은 계란을 곁들여요."],
+      us:"고구마=Korean sweet potato(H마트). 없으면 미국 garnet yam으로 대체.",tip:"주말에 미리 쪄 냉장하면 아침 5분이면 끝!"},
+    {id:"bk5",ko:"브로콜리 계란",en:"Broccoli egg scramble",plate:"🥦🍳",serve:"계란 1개",prep:"7분",tags:["단백질","비타민C"],
+      ing:["계란 1개","데친 브로콜리 다진 것"],steps:["브로콜리를 3분 쪄서 잘게 다져요.","계란에 섞어 부드럽게 볶아요."],
+      tip:"브로콜리는 미리 데쳐 소분해두면 빨라요."},
+    {id:"bk6",ko:"바나나 오트밀",en:"Banana oatmeal",plate:"🍌🥣",serve:"½공기",prep:"7분",tags:["식이섬유","단백질"],
+      ing:["오트밀","우유 또는 물","바나나 ½개"],steps:["오트밀을 우유에 5분 끓여요.","바나나를 으깨 섞어요."],
+      us:"old-fashioned rolled oats 사용.",tip:"설탕 없이 바나나로 달콤해요."},
+    {id:"bk7",ko:"두부 계란 스크램블",en:"Tofu-egg scramble",plate:"🍳🧈",serve:"두부 40g + 계란",prep:"7분",tags:["단백질","칼슘"],
+      ing:["두부 40g","계란 1개","기름 한 방울"],steps:["두부를 으깨 물기를 짜요.","계란을 풀어요.","약불에서 함께 부드럽게 익혀요."],
+      us:"firm tofu 어디서든 구매 가능.",tip:"부드러워 스스로 집어먹기 좋아요."},
+    {id:"bk8",ko:"무염 프렌치토스트",en:"Egg bread (French toast)",plate:"🍞🍳",serve:"빵 ½장",prep:"8분",tags:["단백질"],
+      ing:["식빵 ½장","계란 1개","우유 살짝"],steps:["계란·우유를 풀어 빵을 적셔요.","약불에 노릇하게 부쳐요.","작게 잘라요."],
+      tip:"우유를 살짝 섞으면 더 촉촉해요."},
+    {id:"bk9",ko:"미역 계란밥",en:"Seaweed & egg rice",plate:"🌿🥚🍚",serve:"½공기",prep:"7분",tags:["칼슘","단백질","요오드"],
+      ing:["불린 미역 조금","계란 1개","진밥","참기름"],steps:["미역을 잘게 잘라 참기름에 볶아요.","밥을 넣어 볶아요.","계란을 풀어 넣어 익혀요."],
+      us:"미역=dried wakame/miyeok(H마트·아마존).",tip:"미역+계란으로 칼슘과 철분을 챙겨요."},
+    {id:"bk10",ko:"감자 계란밥",en:"Potato & egg rice",plate:"🥔🥚🍚",serve:"½공기",prep:"8분",tags:["단백질","식이섬유"],
+      ing:["감자","계란 1개","진밥"],steps:["감자를 잘게 썰어 익혀요.","밥과 함께 볶아요.","계란을 풀어 부드럽게 섞어요."],
+      tip:"두 가지 재료로 간단하게."},
+    {id:"bk11",ko:"단호박 오믈렛",en:"Kabocha omelette",plate:"🎃🍳",serve:"오믈렛 1개",prep:"8분",tags:["단백질","비타민A"],
+      ing:["단호박 으깬 것","계란 1개"],steps:["단호박을 쪄서 으깨요.","계란과 섞어 부드럽게 부쳐요.","반으로 접어요."],
+      us:"단호박=kabocha(Asian/미국마트). 없으면 butternut squash로 대체.",tip:"자연 단맛으로 아이가 잘 먹어요."}
+  ],
+  amSnack:[
+    {id:"as0",ko:"제철 과일",en:"Seasonal fruit",plate:"🫐🍓",serve:"¼~½컵",tags:["비타민C"],
+      ing:["블루베리·딸기·바나나 등"],steps:["씻어요.","블루베리는 반, 포도는 4등분으로 작게 잘라요."],tip:"한 주 동안 색깔을 바꿔가며 주세요."},
+    {id:"as1",ko:"그릭요거트 + 과일",en:"Greek yogurt + fruit",plate:"🥛🍓",serve:"½컵",tags:["유산균","칼슘"],
+      ing:["플레인 그릭요거트","부드러운 과일"],steps:["요거트를 담아요.","으깬 과일을 올려요."],tip:"설탕 없이 과일로 달콤하게."},
+    {id:"as2",ko:"삶은 계란",en:"Boiled egg",plate:"🥚",serve:"½개",tags:["단백질"],
+      ing:["계란 1개"],steps:["10분 삶아요.","식혀 껍질을 벗기고 반으로 썰어요."],tip:"남은 반쪽은 다음 간식으로."},
+    {id:"as3",ko:"데친 브로콜리 + 아보카도",en:"Broccoli + avocado",plate:"🥦🥑",serve:"브로콜리 3~4송이",tags:["비타민C","좋은지방"],
+      ing:["브로콜리","잘 익은 아보카도"],steps:["브로콜리를 3분 쪄요.","아보카도를 부드럽게 썰어 함께 내요."],tip:"손으로 집기 좋은 채소+좋은지방 조합."},
+    {id:"as4",ko:"방울토마토 + 아보카도",en:"Tomato + avocado",plate:"🍅🥑",serve:"토마토 3~4개",tags:["비타민C","좋은지방"],
+      ing:["방울토마토","잘 익은 아보카도"],steps:["토마토를 세로로 4등분해요.","아보카도를 부드럽게 썰어요."],tip:"토마토는 세로로 잘라 목막힘을 예방해요."},
+    {id:"as5",ko:"오이 · 당근 스틱",en:"Cucumber & carrot sticks",plate:"🥒🥕",serve:"스틱 몇 개",tags:["비타민A","식이섬유"],
+      ing:["오이","당근"],steps:["오이 껍질을 벗겨 말랑한 스틱으로 썰어요.","당근은 살짝 쪄 부드럽게 스틱으로 썰어요."],tip:"당근은 살짝 익혀야 안전해요."},
+    {id:"as6",ko:"배·사과 강판",en:"Grated pear/apple",plate:"🍐🍎",serve:"¼컵",tags:["비타민C","식이섬유"],
+      ing:["배 또는 사과"],steps:["껍질을 벗겨 곱게 갈아요.","신선하게 바로 내요."],tip:"소화에 부드럽고 변비에도 좋아요."},
+    {id:"as7",ko:"감자 당근 스프",en:"Potato-carrot soup",plate:"🥔🥕🥣",serve:"½컵",tags:["비타민A","식이섬유"],
+      ing:["감자","당근","우유(또는 물)"],steps:["감자·당근을 쪄서 부드럽게 해요.","우유와 함께 곱게 갈아요.","따뜻하게 데워 내요."],tip:"따뜻하고 부드러운 스프."}
+  ],
+  lunch:[
+    {id:"ln0",ko:"닭안심 채소덮밥",en:"Chicken & veggie rice bowl",plate:"🍗🥕🍚",serve:"진밥 ½공기 + 닭안심 30g",tags:["단백질"],
+      ing:["닭안심 30g","당근·애호박·양파","진밥","다시마육수"],steps:["닭안심을 삶아 잘게 찢어요.","채소를 육수에 부드럽게 볶아요.","닭고기를 넣고 밥 위에 올려요."],
+      us:"닭안심=chicken tenders. 애호박=zucchini. 다시마육수 대신 무염 chicken/veg broth OK.",tip:"양파가 자연 단맛을 더해요."},
+    {id:"ln1",ko:"연어구이 + 밥 + 브로콜리",en:"Baked salmon + rice + broccoli",plate:"🐟🥦🍚",serve:"연어 40g + 진밥",tags:["오메가3","단백질","비타민C"],
+      ing:["연어 40g","브로콜리","진밥","기름 약간"],steps:["연어를 기름에 노릇하게 익혀요.","브로콜리를 3분 쪄요.","가시를 확인해 발라 밥과 내요."],
+      us:"연어=salmon fillet 어디서든 구매 가능.",tip:"두뇌 발달에 좋은 DHA가 풍부해요."},
+    {id:"ln2",ko:"소고기전 + 밥 + 오이",en:"Beef mini-pancakes + rice",plate:"🥩🥒🍚",serve:"소고기전 2~3장",tags:["철분","단백질"],
+      ing:["다진 소고기","계란 1개","팽이·당근 다진 것","기름","진밥·오이"],steps:["소고기·계란·채소를 섞어요.","작게 동글동글 부쳐요.","밥·오이스틱과 내요."],
+      us:"팽이=enoki(Asian마트) 또는 잘게 다진 양송이버섯으로 대체.",tip:"넉넉히 부쳐 냉동해두면 든든해요."},
+    {id:"ln3",ko:"새우 애호박 볶음밥",en:"Shrimp & zucchini fried rice",plate:"🍤🍚🥬",serve:"볶음밥 ½공기",tags:["단백질","아연"],
+      ing:["손질 새우 다진 것","애호박","계란","진밥","기름"],steps:["새우·애호박을 볶아요.","계란을 스크램블해요.","밥을 넣어 고루 섞어요."],
+      us:"애호박=zucchini. 새우=frozen shrimp 해동 후 사용.",tip:"새우의 아연이 면역에 도움을 줘요."},
+    {id:"ln4",ko:"두부 브로콜리 덮밥",en:"Tofu-broccoli rice",plate:"🧈🥦🍚",serve:"진밥 ½공기",tags:["단백질","비타민C"],
+      ing:["두부","브로콜리","당근","다시마육수","진밥"],steps:["두부를 큐브로 노릇하게 구워요.","브로콜리를 쪄요.","당근과 육수에 살짝 끓여 밥에 올려요."],
+      tip:"식물성 단백질로 채우는 날."},
+    {id:"ln5",ko:"대구살 + 밥 + 애호박",en:"Pan-cooked cod + rice",plate:"🐟🍚🥬",serve:"흰살생선 40g + 진밥",tags:["단백질","오메가3"],
+      ing:["대구살 40g","애호박","진밥","기름 약간"],steps:["대구를 기름에 부드럽게 익혀요(가시 확인).","애호박을 볶아요.","밥과 내요."],
+      us:"대구=cod fillet. 없으면 tilapia 등 순한 흰살생선.",tip:"담백하고 부드러워 좋아요."},
+    {id:"ln6",ko:"계란 채소 볶음밥",en:"Egg & veggie fried rice",plate:"🍳🥕🍚",serve:"볶음밥 ½공기",tags:["단백질","식이섬유"],
+      ing:["계란","당근·완두·애호박","진밥","기름"],steps:["채소를 잘게 볶아요.","계란을 스크램블해요.","밥을 넣어 볶아요."],
+      us:"냉동 완두콩(frozen peas) 활용하면 편해요.",tip:"냉장고 속 채소 정리에 딱."},
+    {id:"ln7",ko:"닭고기 채소죽",en:"Chicken veggie porridge",plate:"🍗🍚🥕",serve:"죽 ½공기",tags:["단백질"],
+      ing:["닭고기","진밥","당근·애호박","닭·다시마육수"],steps:["닭고기를 삶아 찢어요.","밥·채소를 육수에 죽으로 끓여요.","닭고기를 넣어요."],
+      tip:"입맛 없는 날 부담 없이."},
+    {id:"ln8",ko:"소고기 가지 덮밥",en:"Beef & eggplant rice bowl",plate:"🥩🍆🍚",serve:"덮밥 ½공기",tags:["철분","식이섬유"],
+      ing:["다진 소고기","가지","양파","진밥","참기름"],steps:["가지·양파를 잘게 썰어 부드럽게 볶아요.","소고기를 넣어 익혀요.","밥에 올려요."],
+      tip:"가지는 푹 익혀 소화가 편해요."},
+    {id:"ln9",ko:"청경채 소고기밥",en:"Bok choy & beef rice",plate:"🥬🥩🍚",serve:"½공기",tags:["철분","비타민C"],
+      ing:["다진 소고기","청경채","진밥","참기름"],steps:["청경채를 데쳐 잘게 썰어요.","소고기를 볶아요.","밥과 섞어요."],
+      us:"청경채=baby bok choy, 미국 대형마트에도 있어요.",tip:"청경채의 비타민C가 철분 흡수를 도와요."},
+    {id:"ln10",ko:"애호박 가자미밥",en:"Zucchini & white fish rice",plate:"🐟🥬🍚",serve:"½공기",tags:["오메가3","단백질"],
+      ing:["가자미살(또는 흰살생선)","애호박","진밥","참기름"],steps:["생선을 익혀 가시를 발라 부숴요.","애호박을 볶아요.","밥과 섞어요."],
+      us:"가자미=flounder/sole. 없으면 cod·tilapia로 대체.",tip:"담백한 흰살생선으로 오메가3 보충."},
+    {id:"ln11",ko:"새우 옥수수 호박밥",en:"Shrimp, corn & zucchini rice",plate:"🍤🌽🍚",serve:"½공기",tags:["단백질","아연"],
+      ing:["새우 다진 것","옥수수","애호박","진밥"],steps:["새우·애호박을 볶아요.","옥수수를 넣어요.","밥과 섞어요."],
+      us:"냉동 옥수수(frozen corn)면 편해요.",tip:"옥수수 알이 단단하면 살짝 으깨요."},
+    {id:"ln12",ko:"순두부 양송이 덮밥",en:"Soft tofu & mushroom rice",plate:"🍲🍄🍚",serve:"½공기",tags:["단백질","칼슘"],
+      ing:["순두부","양송이버섯","애호박","다시마육수","진밥"],steps:["버섯·애호박을 볶아요.","순두부를 넣어 부드럽게 끓여요.","밥에 올려요."],
+      us:"순두부=silken tofu. 양송이=cremini/button mushroom.",tip:"부드러워 술술 잘 넘어가요."},
+    {id:"ln13",ko:"로제 소고기 덮밥",en:"Creamy tomato-beef rice",plate:"🍅🥩🍚",serve:"½공기",tags:["철분","비타민C"],
+      ing:["다진 소고기","잘 익은 토마토","우유 조금","양파","진밥"],steps:["양파·소고기를 볶아요.","토마토를 으깨 넣어 졸여요.","우유를 조금 넣어 로제처럼 만들어 밥에 올려요."],
+      us:"생토마토 대신 무염 canned crushed tomato도 OK.",tip:"토마토+우유로 간 없이 부드러운 로제 맛."},
+    {id:"ln14",ko:"감자 연어밥",en:"Potato & salmon rice",plate:"🥔🐟🍚",serve:"½공기",tags:["오메가3","단백질","식이섬유"],
+      ing:["연어","감자","애호박","진밥"],steps:["감자를 잘게 익혀요.","연어를 구워 가시를 발라 부숴요.","밥·채소와 섞어요."],
+      tip:"DHA와 든든함을 한 그릇에."},
+    {id:"ln15",ko:"닭 고구마밥",en:"Chicken & sweet potato rice",plate:"🍗🍠🍚",serve:"½공기",tags:["단백질","비타민A"],
+      ing:["닭안심","고구마","애호박","진밥"],steps:["닭안심을 삶아 찢어요.","고구마를 쪄 으깨요.","밥·채소와 섞어요."],
+      us:"고구마=Korean sweet potato, 없으면 미국 sweet potato로 대체.",tip:"자연 단맛으로 정말 잘 먹어요."}
+  ],
+  pmSnack:[
+    {id:"ps0",ko:"고구마",en:"Steamed sweet potato",plate:"🍠",serve:"½개",tags:["비타민A","식이섬유"],
+      ing:["고구마"],steps:["푹 쪄요.","으깨거나 말랑한 스틱으로 썰어요."],
+      us:"Korean sweet potato가 더 달아요(H마트). 미국 것도 OK.",tip:"든든해서 저녁까지 잘 버텨요 — 제일린이 최애."},
+    {id:"ps1",ko:"으깬 감자",en:"Mashed potato",plate:"🥔",serve:"½공기",tags:["식이섬유"],
+      ing:["감자","우유 살짝"],steps:["감자를 쪄서 으깨요.","우유를 조금 넣어 부드럽게 해요."],tip:"제일린이가 잘 먹는 간식."},
+    {id:"ps2",ko:"단호박찜",en:"Steamed kabocha",plate:"🎃",serve:"2~3조각",tags:["비타민A","식이섬유"],
+      ing:["단호박"],steps:["부드럽게 쪄요.","속살만 떠서 으깨요."],us:"단호박=kabocha, 없으면 butternut squash.",tip:"자연 단맛이 가득."},
+    {id:"ps3",ko:"바나나 + 그릭요거트",en:"Banana + Greek yogurt",plate:"🍌🥛",serve:"바나나 ½개",tags:["유산균","칼륨"],
+      ing:["바나나 ½개","플레인 그릭요거트"],steps:["바나나를 썰어요.","요거트에 찍어 먹어요."],tip:"빠른 에너지 보충."},
+    {id:"ps4",ko:"무염 바나나 팬케이크",en:"Banana pancake",plate:"🥞🍌",serve:"작은 것 2~3장",prep:"10분",tags:["단백질","식이섬유"],
+      ing:["바나나 ½개","계란 1개","오트가루 2큰술"],steps:["바나나를 으깨요.","계란·오트가루와 섞어요.","작게 부쳐요."],
+      us:"오트가루=rolled oats를 믹서에 갈면 돼요.",tip:"넉넉히 만들어 냉동하면 편해요."},
+    {id:"ps5",ko:"아보카도 바나나 매쉬",en:"Avocado-banana mash",plate:"🥑🍌",serve:"¼컵",tags:["좋은지방","칼륨","식이섬유"],
+      ing:["잘 익은 아보카도 ¼개","바나나 ½개"],steps:["아보카도·바나나를 함께 으깨요.","바로 부드럽게 내요."],tip:"좋은 지방과 자연 단맛으로 든든해요."},
+    {id:"ps6",ko:"감자 채소전",en:"Potato veggie pancake",plate:"🥔🥬",serve:"작은 것 2~3장",prep:"12분",tags:["식이섬유"],
+      ing:["감자","애호박","계란","기름"],steps:["감자를 갈아 물기를 짜요.","애호박·계란과 섞어요.","작게 부쳐요."],tip:"바삭한 가장자리를 아이가 좋아해요."},
+    {id:"ps7",ko:"사과머핀",en:"Apple muffin (no sugar)",plate:"🍎🧁",serve:"작은 머핀 1~2개",prep:"20분",tags:["식이섬유"],
+      ing:["사과(간 것)","바나나 ½개","계란 1개","오트가루/쌀가루"],steps:["사과·바나나를 갈아요.","계란·가루와 섞어요.","머핀틀에 담아 오븐/에어프라이어에 구워요."],
+      us:"쌀가루=rice flour(마트 gluten-free 코너).",tip:"설탕 없이 과일로 달콤 — 넉넉히 구워 냉동!"},
+    {id:"ps8",ko:"땅콩 바나나빵",en:"No-bake peanut-banana bar",plate:"🥜🍌",serve:"1~2조각",prep:"5분",tags:["단백질","좋은지방"],
+      ing:["바나나 1개","무가당 땅콩버터 1큰술","오트가루"],steps:["바나나를 으깨요.","땅콩버터·오트가루와 섞어요.","틀에 눌러 냉장 후 잘라요."],tip:"오븐·밀가루 없이 만드는 간식."},
+    {id:"ps9",ko:"옥수수전",en:"Corn pancake",plate:"🌽🥞",serve:"작은 것 2~3장",prep:"10분",tags:["식이섬유"],
+      ing:["옥수수알","계란 1개","쌀가루 조금"],steps:["옥수수를 살짝 으깨요.","계란·쌀가루와 섞어요.","작게 부쳐요."],
+      us:"냉동 옥수수(frozen corn) 사용 OK.",tip:"톡톡 씹히는 옥수수를 좋아해요."},
+    {id:"ps10",ko:"고구마 두부 스프",en:"Sweet potato & tofu soup",plate:"🍠🥣",serve:"½컵",tags:["비타민A","단백질","칼슘"],
+      ing:["찐 고구마","두부","우유"],steps:["고구마·두부·우유를 함께 갈아요.","따뜻하게 데워 부드럽게 내요."],tip:"단백질+비타민A가 든든한 스프."}
+  ]
+};
+const NUTRI={"철분":"🥩","단백질":"🍗","칼슘":"🦴","오메가3":"🐟","비타민C":"🍊","비타민A":"🥕","식이섬유":"🌾","유산균":"🥛","아연":"🌰","좋은지방":"🥑","요오드":"🌿","칼륨":"🍌"};
+const CORE=["철분","단백질","칼슘","오메가3","비타민C","비타민A","식이섬유","유산균"];
+const SLOTS={breakfast:{arr:M.breakfast,off:0,cat:"아침 · Breakfast"},amSnack:{arr:M.amSnack,off:0,cat:"오전 간식 · Morning snack"},
+  lunch:{arr:M.lunch,off:3,cat:"점심 · Lunch"},pmSnack:{arr:M.pmSnack,off:2,cat:"오후 간식 · Afternoon snack"},dinner:{arr:null,off:5,cat:"저녁 · Dinner"}};
+M.dinner=[
+  {id:"dn0",ko:"소고기 미역국 + 밥",en:"Beef seaweed soup + rice",plate:"🥩🌿🍚",serve:"국 + 진밥 ½공기",tags:["철분","칼슘","요오드"],
+    ing:["불린 미역","소고기 얇게","참기름","물","진밥"],steps:["미역을 불려 헹궈요.","참기름에 소고기·미역을 볶아요.","물을 붓고 20분 끓여요(무염)."],
+    us:"미역=dried wakame/miyeok(H마트·아마존).",tip:"몸을 데워주는 든든한 한 그릇."},
+  {id:"dn1",ko:"연두부 계란탕 + 밥",en:"Soft tofu & egg soup + rice",plate:"🍲🥚🍚",serve:"탕 + 진밥",tags:["단백질","칼슘"],
+    ing:["연두부","계란","다시마육수","부추 약간","진밥"],steps:["다시마육수를 끓여요.","연두부를 넣어요.","풀어둔 계란을 부드럽게 흘려넣어요."],
+    us:"연두부=silken/soft tofu. 부추=chives(생략 가능).",tip:"저녁에 부담 없는 순한 국물."},
+  {id:"dn2",ko:"시금치나물 + 소고기 + 밥",en:"Spinach namul + beef + rice",plate:"🥬🥩🍚",serve:"나물 + 소고기 + 밥",tags:["철분","비타민C"],
+    ing:["시금치","다진 소고기","참기름·깨","진밥"],steps:["시금치를 30초 데쳐 물기를 꼭 짜 다져요.","참기름·깨로 무쳐요.","소고기를 볶아 함께 내요."],
+    tip:"시금치의 비타민C가 철분 흡수를 도와요."},
+  {id:"dn3",ko:"두부 새우 완자 + 밥",en:"Tofu-shrimp balls + rice",plate:"🍤🧈🍚",serve:"완자 3~4개 + 밥",tags:["단백질","칼슘","아연"],
+    ing:["두부","다진 새우","당근","계란","진밥"],steps:["두부 물기를 짜 새우·당근·계란과 섞어요.","동그랗게 빚어요.","찌거나 팬에 익혀요."],
+    tip:"말랑말랑 집어먹기 좋은 단백질."},
+  {id:"dn4",ko:"단호박 두부 스테이크 + 밥",en:"Kabocha-tofu patty + rice",plate:"🎃🧈🍚",serve:"1~2개 + 밥",tags:["단백질","비타민A"],
+    ing:["단호박","두부","계란","기름","진밥"],steps:["단호박을 쪄 으깨요.","으깬 두부·계란과 섞어요.","작게 부쳐요."],
+    us:"단호박 없으면 butternut squash로 대체.",tip:"간 없이도 달콤한 인기 메뉴."},
+  {id:"dn5",ko:"닭안심 브로콜리 + 밥",en:"Chicken & broccoli + rice",plate:"🍗🥦🍚",serve:"닭안심 30g + 밥",tags:["단백질","비타민C"],
+    ing:["닭안심","브로콜리·당근","다시마육수","진밥"],steps:["닭안심을 삶아 찢어요.","브로콜리를 3분 쪄요.","참기름 한 방울로 버무려 밥과 내요."],
+    tip:"간단하고 빠른 저녁."},
+  {id:"dn6",ko:"감자 소고기 채소볶음 + 밥",en:"Beef, potato & veg + rice",plate:"🥔🥩🍚",serve:"볶음 + 밥 ½공기",tags:["철분","식이섬유"],
+    ing:["다진 소고기","감자·당근·양파","기름","진밥"],steps:["감자·당근을 잘게 썰어 살짝 데쳐요.","소고기·양파와 부드럽게 볶아요.","밥과 내요."],
+    tip:"양파·감자로 구수한 단맛이 나요."},
+  {id:"dn7",ko:"흰살생선 애호박 조림 + 밥",en:"White fish & zucchini + rice",plate:"🐟🥬🍚",serve:"생선 40g + 밥",tags:["단백질","오메가3"],
+    ing:["흰살생선","애호박","다시마육수","진밥"],steps:["생선·애호박을 다시마육수에 자작하게 익혀요(가시 확인).","밥과 내요."],
+    us:"cod·tilapia·flounder 등 순한 흰살생선.",tip:"부드럽고 순해 저녁에 잘 맞아요."},
+  {id:"dn8",ko:"미역 들깨밥",en:"Seaweed & perilla rice",plate:"🌿🍚",serve:"½공기",tags:["칼슘","요오드","좋은지방"],
+    ing:["불린 미역","들깨가루","진밥","참기름","다시마육수"],steps:["미역을 참기름에 볶아요.","육수·밥을 넣어 끓여요.","들깨가루를 풀어요."],
+    us:"들깨가루=perilla seed powder(H마트·아마존). 미역=dried wakame.",tip:"들깨의 좋은 지방이 뇌 발달을 도와요."},
+  {id:"dn9",ko:"감자 소고기 덮밥",en:"Potato & beef rice bowl",plate:"🥔🥩🍚",serve:"덮밥 ½공기",tags:["철분","식이섬유"],
+    ing:["다진 소고기","감자","당근","양파","진밥"],steps:["감자·당근을 잘게 썰어 익혀요.","소고기·양파를 볶아요.","밥에 올려요."],
+    tip:"감자·양파로 구수한 단맛."},
+  {id:"dn10",ko:"소고기 들깨밥",en:"Beef & perilla rice",plate:"🥩🍚",serve:"½공기",tags:["철분","좋은지방"],
+    ing:["다진 소고기","들깨가루","애호박","진밥","참기름"],steps:["소고기·애호박을 볶아요.","밥을 넣어 볶아요.","들깨가루를 섞어요."],
+    us:"들깨가루=perilla powder. 없으면 곱게 간 볶은 참깨로 대체.",tip:"고소한 들깨로 간 없이 풍미 up."},
+  {id:"dn11",ko:"두부 들깨밥",en:"Tofu & perilla rice",plate:"🧈🍚",serve:"½공기",tags:["단백질","칼슘","좋은지방"],
+    ing:["두부","들깨가루","애호박","진밥"],steps:["두부·애호박을 볶아요.","밥을 넣어 볶아요.","들깨가루를 섞어요."],
+    tip:"두부+들깨로 칼슘과 좋은 지방을."},
+  {id:"dn12",ko:"애호박 크림 리조또",en:"Creamy zucchini risotto",plate:"🥬🍚",serve:"½공기",tags:["칼슘","비타민C"],
+    ing:["애호박","우유","진밥"],steps:["애호박을 잘게 볶아요.","밥·우유를 넣어 크리미하게 끓여요.","부드럽게 졸여 마무리해요."],
+    tip:"우유로 부드럽고 고소한 크림 리조또."},
+  {id:"dn13",ko:"감자옹심이",en:"Potato dumpling soup",plate:"🥔🍲",serve:"옹심이 5~6개 + 국물",tags:["식이섬유","단백질"],
+    ing:["감자(간 것)","감자전분 조금","애호박","다시마육수"],steps:["간 감자에 전분을 섞어 작은 옹심이를 빚어요.","육수에 애호박과 함께 끓여요.","옹심이가 떠오르면 완성."],
+    us:"감자전분=potato starch(Asian마트). 없으면 cornstarch로 대체.",tip:"말랑한 옹심이를 아이가 좋아해요."},
+  {id:"dn14",ko:"새우 청경채밥",en:"Shrimp & bok choy rice",plate:"🍤🥬🍚",serve:"½공기",tags:["단백질","아연","비타민C"],
+    ing:["새우 다진 것","청경채","진밥","참기름"],steps:["청경채를 데쳐 다져요.","새우를 볶아요.","밥과 섞어요."],
+    us:"청경채=baby bok choy.",tip:"아연+비타민으로 면역에 좋아요."}
+];
+SLOTS.dinner.arr=M.dinner;
+
+/* ===== persistence (standalone: localStorage; preview: memory fallback) ===== */
+const store={};
+(function(){try{for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);store[k]=localStorage.getItem(k);}}catch(e){}})();
+const sGet=k=>store[k];
+const sSet=(k,v)=>{store[k]=v;try{localStorage.setItem(k,v);}catch(e){}};
+const sDel=k=>{delete store[k];try{localStorage.removeItem(k);}catch(e){}};
+
+/* ===== dates & rotation ===== */
+const EPOCH=new Date(2025,0,1);
+const iso=d=>`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+const dayIndex=d=>Math.floor((new Date(d.getFullYear(),d.getMonth(),d.getDate())-EPOCH)/86400000);
+const addDays=(d,n)=>new Date(d.getFullYear(),d.getMonth(),d.getDate()+n);
+function mealFor(date,slot){
+  const S=SLOTS[slot],i=dayIndex(date);
+  const base=((i+S.off)%S.arr.length+S.arr.length)%S.arr.length;
+  const sw=parseInt(sGet(`swap:${iso(date)}:${slot}`)||"0",10);
+  return S.arr[((base+sw)%S.arr.length+S.arr.length)%S.arr.length];
+}
+const KDAYS=["일","월","화","수","목","금","토"];
+const SLOTORDER=["breakfast","amSnack","lunch","pmSnack","dinner"];
+const SLOTEMOJI={breakfast:"🥚",amSnack:"🍓",lunch:"🍚",pmSnack:"🍠",dinner:"🍲"};
+
+/* ===== state ===== */
+let selected=new Date();const today=new Date();
+const sameDay=(a,b)=>a.getFullYear()==b.getFullYear()&&a.getMonth()==b.getMonth()&&a.getDate()==b.getDate();
+function weekOf(date){const s=addDays(date,-date.getDay());return Array.from({length:7},(_,i)=>addDays(s,i));}
+function select(dt){selected=dt;renderPlan();window.scrollTo({top:0,behavior:"smooth"});}
+
+/* ===== week view ===== */
+function renderWeek(){
+  const days=weekOf(selected);
+  document.getElementById("weekBody").innerHTML=days.map(d=>{
+    const sel=sameDay(d,selected),tod=sameDay(d,today);
+    const wc=SLOTORDER.filter(sl=>sGet("ate:"+iso(d)+":"+sl)==="2").length;
+    const star=wc?`<span class="star">⭐ 잘 먹음${wc>1?" ×"+wc:""}</span>`:"";
+    return `<button class="weekday${sel?' sel':''}${tod?' tod':''}" data-t="${d.getTime()}">
+      <span class="wrow"><span class="wd">${d.getMonth()+1}/${d.getDate()} <span class="dow">(${KDAYS[d.getDay()]})</span>${tod?' · 오늘':''}</span>${star}</span>
+      <span class="wm"><span>🥚 ${mealFor(d,"breakfast").ko}</span><span>🍚 ${mealFor(d,"lunch").ko}</span><span>🍲 ${mealFor(d,"dinner").ko}</span></span>
+    </button>`;
+  }).join("");
+  const w=weekOf(selected);
+  document.getElementById("wkRange").textContent=`${w[0].getMonth()+1}/${w[0].getDate()} – ${w[6].getMonth()+1}/${w[6].getDate()}`;
+}
+
+/* ===== meal card ===== */
+const tagHTML=t=>t.map(x=>`<span class="t">${NUTRI[x]||"•"} ${x}</span>`).join("");
+function plateHTML(meal){const p=sGet("photo:"+meal.id);return p?`<div class="plate photo" style="background-image:url('${p}')"></div>`:`<div class="plate">${meal.plate}</div>`;}
+function mealCard(slot,time){
+  const meal=mealFor(selected,slot),S=SLOTS[slot];
+  const cls=(slot==="amSnack"||slot==="pmSnack")?"snack":slot;
+  const hasPhoto=!!sGet("photo:"+meal.id);
+  const ate=sGet("ate:"+iso(selected)+":"+slot);
+  const badge=meal.prep?`<span class="badge">간단 · ${meal.prep}</span>`:"";
+  return `
+  <div class="slot ${cls}">
+    <span class="time">${time}</span><span class="node"></span>
+    <details class="meal ${cls}">
+      <summary>
+        ${plateHTML(meal)}
+        <div class="meal-info">
+          <div class="cat">${S.cat}</div>
+          <div class="name">${meal.ko}${badge} <span class="en">${meal.en}</span></div>
+          <div class="serve">🍽️ ${meal.serve}</div>
+          <div class="tags">${tagHTML(meal.tags)}</div>
+          <div class="eat" data-slot="${slot}">
+            <span class="eatq">얼마나 먹었어요?</span>
+            <button class="epill well ${ate==='2'?'sel':''}" data-v="2">😋 잘</button>
+            <button class="epill ${ate==='1'?'sel':''}" data-v="1">🙂 조금</button>
+            <button class="epill ${ate==='0'?'sel':''}" data-v="0">🥲 안</button>
+          </div>
+          <div class="mact">
+            <button class="mbtn swap" data-slot="${slot}">↻ 다른 메뉴</button>
+            <button class="mbtn cam" data-id="${meal.id}">📷 ${hasPhoto?"사진 바꾸기":"사진 추가"}</button>
+            ${hasPhoto?`<button class="mbtn rm" data-id="${meal.id}">🗑 사진 삭제</button>`:""}
+          </div>
+        </div>
+        <span class="chev">▼</span>
+      </summary>
+      <div class="recipe">
+        <h4>🧺 재료 · Ingredients</h4><ul>${meal.ing.map(x=>`<li>${x}</li>`).join("")}</ul>
+        <h4>👩‍🍳 만드는 법 · Method</h4><ol>${meal.steps.map(x=>`<li>${x}</li>`).join("")}</ol>
+        ${meal.us?`<div class="usnote">🇺🇸 미국에서 · US: ${meal.us}</div>`:""}
+        <div class="tip">💡 ${meal.tip}</div>
+      </div>
+    </details>
+  </div>`;
+}
+const simpleRow=(cls,time,emoji,title,sub)=>`
+  <div class="slot ${cls}"><span class="time">${time}</span><span class="node"></span>
+    <div class="simple ${cls==='nap'?'nap':''}"><div class="emoji">${emoji}</div>
+    <div class="txt"><strong>${title}</strong><small>${sub}</small></div></div></div>`;
+
+/* ===== day plan ===== */
+function renderPlan(){
+  const isToday=sameDay(selected,today);
+  document.getElementById("planDate").textContent=`${selected.getMonth()+1}월 ${selected.getDate()}일 (${KDAYS[selected.getDay()]})`;
+  document.getElementById("planSub").textContent=isToday?"오늘의 식단 · Today's plan":"식단 미리보기 · Plan preview";
+  document.getElementById("varDay").textContent=isToday?"오늘":`${selected.getMonth()+1}/${selected.getDate()}`;
+  const nd=addDays(selected,1),tb=mealFor(nd,"breakfast");
+  document.getElementById("timeline").innerHTML=
+    simpleRow("milk","6:00","🍼","우유 200ml","Morning milk · 칼슘·단백질")+
+    mealCard("breakfast","7:00")+
+    mealCard("amSnack","8:30")+
+    mealCard("lunch","11:00")+
+    simpleRow("nap","11:30","😴","낮잠 Nap","11:30 ~ 13:30")+
+    mealCard("pmSnack","14:00")+
+    mealCard("dinner","17:00")+
+    simpleRow("milk","18:00","🍼","우유 200ml","Evening milk · 하루 총 400ml")+
+    ('<div class="tmrw">🌙 내일 아침 · Tomorrow: '+tb.ko+' — 미리 준비해두면 편해요</div>');
+  const covered=new Set();
+  SLOTORDER.forEach(s=>mealFor(selected,s).tags.forEach(t=>covered.add(t)));
+  document.getElementById("nutriChips").innerHTML=CORE.map(t=>`<span class="chip ${covered.has(t)?'on':''}">${NUTRI[t]} ${t}${covered.has(t)?' ✓':''}</span>`).join("");
+  document.getElementById("todayLine").textContent=`${today.getFullYear()}. ${today.getMonth()+1}. ${today.getDate()} (${KDAYS[today.getDay()]}) · 오늘`;
+  renderWeek();renderWell();renderShop();
+}
+
+/* ===== well-eaten log ===== */
+function renderWell(){
+  const byDate={};
+  for(const k in store){
+    const m=k.match(/^ate:(\d{4}-\d{2}-\d{2}):(\w+)$/);
+    if(m&&store[k]==="2"){(byDate[m[1]]=byDate[m[1]]||[]).push(m[2]);}
+  }
+  const dates=Object.keys(byDate).sort().reverse();
+  const el=document.getElementById("wellBody");
+  if(!dates.length){el.innerHTML='<p class="shopnote">아직 기록이 없어요. 잘 먹은 식사에 😋 잘 을 눌러보세요! · No entries yet — tap 😋 잘 when she eats well.</p>';return;}
+  el.innerHTML=dates.map(d=>{
+    const [y,mo,da]=d.split("-").map(Number),dt=new Date(y,mo-1,da);
+    const items=byDate[d].sort((a,b)=>SLOTORDER.indexOf(a)-SLOTORDER.indexOf(b)).map(sl=>{
+      const name=sGet("atemeal:"+d+":"+sl)||mealFor(dt,sl).ko;
+      return `<span class="welltag">${SLOTEMOJI[sl]} ${name}</span>`;
+    }).join("");
+    return `<button class="wellday" data-t="${dt.getTime()}"><span class="wd">⭐ ${mo}/${da} (${KDAYS[dt.getDay()]})</span><span class="wellitems">${items}</span></button>`;
+  }).join("");
+}
+
+/* ===== 2-week shopping list ===== */
+function shopStrip(s){
+  s=s.replace(/\(.*?\)/g,"").trim();
+  s=s.split(" 또는 ")[0].trim();
+  s=s.replace(/\s*(½|¼|[0-9]+)\s*(g|kg|개|장|큰술|작은술|컵|송이|조각|스푼|ml|알)?\s*$/,"");
+  s=s.replace(/\s*(조금|약간|살짝|한 방울|적당량)\s*$/,"");
+  s=s.replace(/\s*(다진 것|으깬 것|간 것|채썬 것|얇게|다진|으깬|데친|삶은|불린|찐)\s*$/,"");
+  s=s.replace(/\s*등( 과일)?\s*$/,"");
+  s=s.replace(/^(부드러운|잘 익은|저염|손질)\s+/,"");
+  ["다진","불린","손질","삶은","찐","데친","으깬","간"].forEach(p=>{if(s.startsWith(p+" "))s=s.slice(p.length+1);});
+  return s.trim();
+}
+function renderShop(){
+  const start=addDays(selected,-selected.getDay());
+  const days=Array.from({length:14},(_,i)=>addDays(start,i));
+  const set=new Map();
+  days.forEach(d=>SLOTORDER.forEach(sl=>mealFor(d,sl).ing.forEach(raw=>raw.split(/[·\/,]/).forEach(p=>{const b=shopStrip(p);if(b&&b.length>1)set.set(b,1);}))));
+  const items=[...set.keys()].sort((a,b)=>a.localeCompare(b,"ko"));
+  document.getElementById("shopBody").innerHTML=
+    `<p class="shopnote">이번 주 + 다음 주 (2주) 기준 · 눌러서 체크 (tap to check off)</p>`+
+    items.map(x=>`<button class="shopitem">${x}</button>`).join("")+
+    `<p class="shopnote">🍼 우유(매일 400ml) · 🍚 밥/진밥 · 🫙 참기름·들기름 상비</p>`;
+}
+
+/* ===== interactions ===== */
+const timeline=document.getElementById("timeline");
+const photoInput=document.getElementById("photoInput");let pendingId=null;
+timeline.addEventListener("click",e=>{
+  const ep=e.target.closest(".epill");
+  if(ep){e.preventDefault();e.stopPropagation();
+    const slot=ep.closest(".eat").dataset.slot,key="ate:"+iso(selected)+":"+slot,mkey="atemeal:"+iso(selected)+":"+slot,v=ep.dataset.v;
+    if(sGet(key)===v){sDel(key);sDel(mkey);}else{sSet(key,v);sSet(mkey,mealFor(selected,slot).ko);}
+    renderPlan();return;}
+  const sw=e.target.closest(".swap");
+  if(sw){e.preventDefault();e.stopPropagation();
+    const slot=sw.dataset.slot,key=`swap:${iso(selected)}:${slot}`;
+    sSet(key,String(parseInt(sGet(key)||"0",10)+1));renderPlan();return;}
+  const cam=e.target.closest(".cam");
+  if(cam){e.preventDefault();e.stopPropagation();pendingId=cam.dataset.id;photoInput.value="";photoInput.click();return;}
+  const rm=e.target.closest(".rm");
+  if(rm){e.preventDefault();e.stopPropagation();sDel("photo:"+rm.dataset.id);renderPlan();return;}
+});
+photoInput.addEventListener("change",e=>{
+  const f=e.target.files[0];if(!f||!pendingId)return;
+  const rd=new FileReader();
+  rd.onload=()=>{const im=new Image();im.onload=()=>{
+    const max=340,sc=Math.min(1,max/Math.max(im.width,im.height));
+    const cw=Math.round(im.width*sc),ch=Math.round(im.height*sc);
+    const cv=document.createElement("canvas");cv.width=cw;cv.height=ch;
+    cv.getContext("2d").drawImage(im,0,0,cw,ch);
+    sSet("photo:"+pendingId,cv.toDataURL("image/jpeg",0.8));pendingId=null;renderPlan();
+  };im.src=rd.result;};
+  rd.readAsDataURL(f);
+});
+document.getElementById("weekBody").addEventListener("click",e=>{const b=e.target.closest(".weekday");if(b)select(new Date(+b.dataset.t));});
+document.getElementById("wellBody").addEventListener("click",e=>{const b=e.target.closest(".wellday");if(b)select(new Date(+b.dataset.t));});
+document.getElementById("shopBody").addEventListener("click",e=>{const b=e.target.closest(".shopitem");if(b)b.classList.toggle("got");});
+document.getElementById("prevWk").onclick=()=>select(addDays(selected,-7));
+document.getElementById("nextWk").onclick=()=>select(addDays(selected,7));
+document.getElementById("todayBtn").onclick=()=>select(new Date());
+
+/* ===== legend + backup + PWA ===== */
+document.getElementById("legend").innerHTML=[["우유 Milk","var(--butter)"],["아침 Breakfast","var(--sunrise)"],["간식 Snack","var(--sage)"],["점심 Lunch","var(--persimmon)"],["낮잠 Nap","var(--plum)"],["저녁 Dinner","var(--dinner)"]]
+  .map(([l,c])=>`<span><span class="sw" style="background:${c}"></span>${l}</span>`).join("");
+document.getElementById("exportBtn").onclick=()=>{
+  const data={};for(const k in store)data[k]=store[k];
+  const a=document.createElement("a");
+  a.href=URL.createObjectURL(new Blob([JSON.stringify(data)],{type:"application/json"}));
+  a.download="jeilin-backup-"+iso(new Date())+".json";a.click();
+};
+document.getElementById("importInput").addEventListener("change",e=>{
+  const f=e.target.files[0];if(!f)return;const rd=new FileReader();
+  rd.onload=()=>{try{const d=JSON.parse(rd.result);for(const k in d)sSet(k,d[k]);renderPlan();alert("복원 완료! · Restored");}catch(err){alert("파일을 읽을 수 없어요 · Could not read file");}};
+  rd.readAsText(f);
+});
+if("serviceWorker" in navigator){window.addEventListener("load",()=>{navigator.serviceWorker.register("service-worker.js").catch(()=>{});});}
+
+renderPlan();
+</script>
+</body>
+</html>
