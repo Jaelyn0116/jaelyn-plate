@@ -49,16 +49,17 @@
   .wk-head button{border:none;background:var(--sage-tint);color:var(--sage-deep);width:38px;height:38px;border-radius:12px;font-size:1.1rem;cursor:pointer;font-weight:700;transition:.15s;}
   .wk-head button:hover{background:var(--sage);color:#fff;}
   .wk-head .today-btn{width:auto;padding:0 14px;font-size:.8rem;font-family:var(--font-body);}
-  .week{display:flex;flex-direction:column;gap:6px;}
-  .weekday{text-align:left;border:1.5px solid var(--line);background:#fff;border-radius:14px;padding:10px 13px;cursor:pointer;font-family:var(--font-body);transition:.15s;display:block;width:100%;}
-  .weekday:hover{border-color:var(--sage);}
-  .weekday.sel{border-color:var(--sage);background:var(--sage-tint);}
-  .weekday.tod{box-shadow:inset 5px 0 0 var(--persimmon);}
-  .weekday .wrow{display:flex;align-items:center;justify-content:space-between;gap:8px;}
-  .weekday .wd{font-weight:700;font-size:.86rem;color:var(--ink);}
-  .weekday .wd .dow{color:var(--ink-soft);font-weight:500;}
-  .weekday .star{font-size:.72rem;font-weight:700;color:#9a7400;background:#FCEFC4;padding:2px 8px;border-radius:12px;white-space:nowrap;}
-  .weekday .wm{font-size:.73rem;color:var(--ink-soft);margin-top:2px;display:flex;flex-wrap:wrap;gap:2px 10px;}
+  .dow{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:4px;}
+  .dow span{text-align:center;font-size:.7rem;font-weight:700;color:var(--ink-soft);}
+  .dow span:first-child{color:var(--dinner);}
+  .wgrid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;}
+  .wcell{aspect-ratio:1/1;border:none;background:transparent;border-radius:12px;cursor:pointer;font-family:var(--font-body);font-size:.95rem;color:var(--ink);position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;transition:.15s;font-weight:500;}
+  .wcell:hover{background:var(--sage-tint);}
+  .wcell.sun{color:var(--dinner);}
+  .wcell.today{background:var(--persimmon);color:#fff;font-weight:700;box-shadow:var(--shadow-sm);}
+  .wcell.selected{outline:2.5px solid var(--sage);outline-offset:-2px;}
+  .wcell.today.selected{outline-color:var(--sage-deep);}
+  .wcell .star{font-size:.58rem;line-height:1;position:absolute;bottom:4px;}
 
   .plan{margin-top:20px;}
   .plan-head{display:flex;align-items:baseline;gap:10px;margin-bottom:2px;padding:0 4px;flex-wrap:wrap;}
@@ -177,12 +178,13 @@
         <button id="nextWk" aria-label="다음 주">›</button>
       </div>
     </div>
-    <div class="week" id="weekBody"></div>
+    <div class="dow"><span>일</span><span>월</span><span>화</span><span>수</span><span>목</span><span>금</span><span>토</span></div>
+    <div class="wgrid" id="weekBody"></div>
   </section>
 
   <section class="plan">
     <div class="plan-head"><span class="d" id="planDate">—</span><span class="sub" id="planSub"></span></div>
-    <div class="hint">🥄 식사를 눌러 조리법 보기 · 😋 잘 먹으면 눌러 기록 · 📷 사진 · ↻ 메뉴 바꾸기</div>
+    <div class="hint">🥄 식사를 눌러 조리법 · 😋 잘 먹으면 기록 · ↻ 메뉴 바꾸기 · ➕ 직접 입력</div>
     <div class="timeline" id="timeline"></div>
   </section>
 
@@ -428,11 +430,15 @@ const EPOCH=new Date(2025,0,1);
 const iso=d=>`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
 const dayIndex=d=>Math.floor((new Date(d.getFullYear(),d.getMonth(),d.getDate())-EPOCH)/86400000);
 const addDays=(d,n)=>new Date(d.getFullYear(),d.getMonth(),d.getDate()+n);
+function customs(slot){try{return JSON.parse(sGet("custom:"+slot)||"[]");}catch(e){return [];}}
+function optionsFor(slot){return SLOTS[slot].arr.concat(customs(slot));}
 function mealFor(date,slot){
-  const S=SLOTS[slot],i=dayIndex(date);
+  const opts=optionsFor(slot),S=SLOTS[slot],i=dayIndex(date);
+  const pk=sGet("pick:"+iso(date)+":"+slot);
+  if(pk){const m=opts.find(o=>o.id===pk);if(m)return m;}
   const base=((i+S.off)%S.arr.length+S.arr.length)%S.arr.length;
-  const sw=parseInt(sGet(`swap:${iso(date)}:${slot}`)||"0",10);
-  return S.arr[((base+sw)%S.arr.length+S.arr.length)%S.arr.length];
+  const sw=parseInt(sGet("swap:"+iso(date)+":"+slot)||"0",10);
+  return opts[((base+sw)%opts.length+opts.length)%opts.length];
 }
 const KDAYS=["일","월","화","수","목","금","토"];
 const SLOTORDER=["breakfast","amSnack","lunch","pmSnack","dinner"];
@@ -448,13 +454,9 @@ function select(dt){selected=dt;renderPlan();window.scrollTo({top:0,behavior:"sm
 function renderWeek(){
   const days=weekOf(selected);
   document.getElementById("weekBody").innerHTML=days.map(d=>{
-    const sel=sameDay(d,selected),tod=sameDay(d,today);
+    const sel=sameDay(d,selected),tod=sameDay(d,today),sun=d.getDay()===0;
     const wc=SLOTORDER.filter(sl=>sGet("ate:"+iso(d)+":"+sl)==="2").length;
-    const star=wc?`<span class="star">⭐ 잘 먹음${wc>1?" ×"+wc:""}</span>`:"";
-    return `<button class="weekday${sel?' sel':''}${tod?' tod':''}" data-t="${d.getTime()}">
-      <span class="wrow"><span class="wd">${d.getMonth()+1}/${d.getDate()} <span class="dow">(${KDAYS[d.getDay()]})</span>${tod?' · 오늘':''}</span>${star}</span>
-      <span class="wm"><span>🥚 ${mealFor(d,"breakfast").ko}</span><span>🍚 ${mealFor(d,"lunch").ko}</span><span>🍲 ${mealFor(d,"dinner").ko}</span></span>
-    </button>`;
+    return `<button class="wcell${sun?' sun':''}${tod?' today':''}${sel?' selected':''}" data-t="${d.getTime()}"><span>${d.getDate()}</span>${wc?'<span class="star">⭐</span>':''}</button>`;
   }).join("");
   const w=weekOf(selected);
   document.getElementById("wkRange").textContent=`${w[0].getMonth()+1}/${w[0].getDate()} – ${w[6].getMonth()+1}/${w[6].getDate()}`;
@@ -478,7 +480,7 @@ function mealCard(slot,time){
         <div class="meal-info">
           <div class="cat">${S.cat}</div>
           <div class="name">${meal.ko}${badge} <span class="en">${meal.en}</span></div>
-          <div class="serve">🍽️ ${meal.serve}</div>
+          <div class="serve">${meal.serve?('🍽️ '+meal.serve):'✏️ 엄마가 추가한 메뉴 · Custom'}</div>
           <div class="tags">${tagHTML(meal.tags)}</div>
           <div class="eat" data-slot="${slot}">
             <span class="eatq">얼마나 먹었어요?</span>
@@ -488,15 +490,18 @@ function mealCard(slot,time){
           </div>
           <div class="mact">
             <button class="mbtn swap" data-slot="${slot}">↻ 다른 메뉴</button>
+            <button class="mbtn addown" data-slot="${slot}">➕ 직접 입력</button>
             <button class="mbtn cam" data-id="${meal.id}">📷 ${hasPhoto?"사진 바꾸기":"사진 추가"}</button>
             ${hasPhoto?`<button class="mbtn rm" data-id="${meal.id}">🗑 사진 삭제</button>`:""}
+            ${meal.custom?`<button class="mbtn rmc" data-cid="${meal.id}" data-slot="${slot}">🗑 메뉴 삭제</button>`:""}
           </div>
         </div>
         <span class="chev">▼</span>
       </summary>
       <div class="recipe">
-        <h4>🧺 재료 · Ingredients</h4><ul>${meal.ing.map(x=>`<li>${x}</li>`).join("")}</ul>
-        <h4>👩‍🍳 만드는 법 · Method</h4><ol>${meal.steps.map(x=>`<li>${x}</li>`).join("")}</ol>
+        ${(meal.ing&&meal.ing.length)?`<h4>🧺 재료 · Ingredients</h4><ul>${meal.ing.map(x=>`<li>${x}</li>`).join("")}</ul>`:""}
+        ${(meal.steps&&meal.steps.length)?`<h4>👩‍🍳 만드는 법 · Method</h4><ol>${meal.steps.map(x=>`<li>${x}</li>`).join("")}</ol>`:""}
+        ${meal.custom?`<div class="usnote">✏️ 엄마가 추가한 메뉴예요. 이제 ↻ 다른 메뉴에서 다시 고를 수 있어요. · Custom dish — now reusable from swap.</div>`:""}
         ${meal.us?`<div class="usnote">🇺🇸 미국에서 · US: ${meal.us}</div>`:""}
         <div class="tip">💡 ${meal.tip}</div>
       </div>
@@ -588,7 +593,27 @@ timeline.addEventListener("click",e=>{
   const sw=e.target.closest(".swap");
   if(sw){e.preventDefault();e.stopPropagation();
     const slot=sw.dataset.slot,key=`swap:${iso(selected)}:${slot}`;
+    sDel("pick:"+iso(selected)+":"+slot);
     sSet(key,String(parseInt(sGet(key)||"0",10)+1));renderPlan();return;}
+  const ao=e.target.closest(".addown");
+  if(ao){e.preventDefault();e.stopPropagation();
+    const slot=ao.dataset.slot;
+    const nm=prompt("무엇을 먹었나요? 메뉴 이름 · What did she eat? (dish name)");
+    if(nm&&nm.trim()){
+      let list;try{list=JSON.parse(sGet("custom:"+slot)||"[]");}catch(_){list=[];}
+      const id="cust_"+Date.now();
+      list.push({id,ko:nm.trim(),en:"직접 추가 · Custom",plate:"🍽️",serve:"",tags:[],ing:[],steps:[],tip:"엄마가 추가한 메뉴예요.",custom:true});
+      sSet("custom:"+slot,JSON.stringify(list));
+      sSet("pick:"+iso(selected)+":"+slot,id);renderPlan();
+    }
+    return;}
+  const rc=e.target.closest(".rmc");
+  if(rc){e.preventDefault();e.stopPropagation();
+    const slot=rc.dataset.slot,cid=rc.dataset.cid;
+    let list;try{list=JSON.parse(sGet("custom:"+slot)||"[]");}catch(_){list=[];}
+    list=list.filter(x=>x.id!==cid);sSet("custom:"+slot,JSON.stringify(list));
+    if(sGet("pick:"+iso(selected)+":"+slot)===cid)sDel("pick:"+iso(selected)+":"+slot);
+    renderPlan();return;}
   const cam=e.target.closest(".cam");
   if(cam){e.preventDefault();e.stopPropagation();pendingId=cam.dataset.id;photoInput.value="";photoInput.click();return;}
   const rm=e.target.closest(".rm");
@@ -606,7 +631,7 @@ photoInput.addEventListener("change",e=>{
   };im.src=rd.result;};
   rd.readAsDataURL(f);
 });
-document.getElementById("weekBody").addEventListener("click",e=>{const b=e.target.closest(".weekday");if(b)select(new Date(+b.dataset.t));});
+document.getElementById("weekBody").addEventListener("click",e=>{const b=e.target.closest(".wcell");if(b)select(new Date(+b.dataset.t));});
 document.getElementById("wellBody").addEventListener("click",e=>{const b=e.target.closest(".wellday");if(b)select(new Date(+b.dataset.t));});
 document.getElementById("shopBody").addEventListener("click",e=>{const b=e.target.closest(".shopitem");if(b)b.classList.toggle("got");});
 document.getElementById("prevWk").onclick=()=>select(addDays(selected,-7));
