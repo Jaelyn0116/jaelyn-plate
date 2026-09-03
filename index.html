@@ -140,6 +140,18 @@
   .shopitem:hover{border-color:var(--sage);}
   .shopitem.got{text-decoration:line-through;color:var(--ink-soft);background:var(--sage-tint);border-color:var(--sage-tint);}
 
+  .modebar{display:flex;gap:6px;margin-top:16px;background:var(--card);border-radius:16px;padding:5px;box-shadow:var(--shadow-sm);}
+  .modebar button{flex:1;border:none;background:transparent;color:var(--ink-soft);font-family:var(--font-display);font-size:1rem;padding:10px;border-radius:12px;cursor:pointer;transition:.15s;}
+  .modebar button.on{background:var(--sage);color:#fff;box-shadow:var(--shadow-sm);}
+  .adult-only{display:none;}
+  .eatout{background:linear-gradient(135deg,#fff,#F1ECFA);border-radius:18px;padding:16px 18px;box-shadow:var(--shadow-sm);margin-top:14px;}
+  .eatout h3{font-family:var(--font-display);font-size:1rem;margin:0 0 4px;color:#7a5a97;}
+  .eatout .big{font-family:var(--font-display);font-size:1.2rem;color:var(--ink);margin:6px 0 2px;}
+  .eatout .dish{font-size:.85rem;color:var(--ink-soft);}
+  .eatout .spots{margin-top:8px;display:flex;flex-direction:column;gap:5px;}
+  .eatout .spot{font-size:.8rem;color:var(--ink);background:#fff;border-radius:10px;padding:7px 11px;border:1px solid var(--line);}
+  .eatout .kid{font-size:.72rem;color:#7a5a97;margin-top:8px;}
+  .eatout .more{margin-top:10px;}
   .legend{display:flex;flex-wrap:wrap;gap:10px 16px;margin-top:16px;padding:14px 16px;background:var(--card);border-radius:16px;box-shadow:var(--shadow-sm);}
   .legend span{font-size:.72rem;color:var(--ink-soft);display:inline-flex;align-items:center;gap:6px;}
   .legend .sw{width:11px;height:11px;border-radius:50%;display:inline-block;}
@@ -165,8 +177,8 @@
     <div class="kicker">오늘도 잘 먹자, 제일린아 💚</div>
     <h1>제일린이 식판<span class="en">Jaelyn's Plate — daily feeding (19 months · salt-free · sugar-free · no cheese yet)</span></h1>
     <div class="today-line" id="todayLine"></div>
-    <div class="nutri-cap">🌈 <span id="varDay"></span> 영양소 · Food variety</div>
-    <div class="nutri" id="nutriChips"></div>
+    <div class="nutri-cap baby-only">🌈 <span id="varDay"></span> 영양소 · Food variety</div>
+    <div class="nutri baby-only" id="nutriChips"></div>
   </header>
 
   <section class="weeknav">
@@ -182,21 +194,32 @@
     <div class="wgrid" id="weekBody"></div>
   </section>
 
-  <section class="plan">
+  <div class="modebar">
+    <button id="modeBaby" class="on">👶 제일린</button>
+    <button id="modeAdult">🧑‍🍳 어른</button>
+  </div>
+
+  <section class="plan baby-only">
     <div class="plan-head"><span class="d" id="planDate">—</span><span class="sub" id="planSub"></span></div>
     <div class="hint">🥄 식사를 눌러 조리법 · 😋 잘 먹으면 기록 · ↻ 메뉴 바꾸기 · ➕ 직접 입력</div>
     <div class="timeline" id="timeline"></div>
   </section>
 
-  <details class="panel" id="wellPanel">
+  <details class="panel baby-only" id="wellPanel">
     <summary>⭐ 잘 먹은 날 모아보기 · Days she ate well</summary>
     <div class="well" id="wellBody"></div>
   </details>
 
-  <details class="panel" id="shopPanel">
+  <details class="panel baby-only" id="shopPanel">
     <summary>🛒 2주 장보기 · 2-week shopping list</summary>
     <div class="shop" id="shopBody"></div>
   </details>
+
+  <section class="adult-only" id="adultWrap">
+    <div id="adultPlan"></div>
+    <div class="eatout" id="eatoutCard"></div>
+    <div id="adultExtras"></div>
+  </section>
 
   <div class="legend" id="legend"></div>
 
@@ -418,6 +441,166 @@ M.dinner=[
 ];
 SLOTS.dinner.arr=M.dinner;
 
+/* ===== ADULT MEALS (2인 · seasoned normally · 한식 위주 + 가끔 미국식) ===== */
+const A = {
+  breakfast:[  /* 어른 아침은 가볍게 · light & quick */
+    {id:"ab0",ko:"토스트 + 계란 + 커피",en:"Toast + egg + coffee",plate:"🍞🍳☕",prep:"7분",shared:true,extra:[],
+      ing:["식빵 1~2장","계란","버터/잼 약간","커피"],
+      steps:["빵을 구워요.","계란을 스크램블/후라이해요.","커피와 함께 가볍게."],
+      tip:"어른 아침은 가볍게 — 5분 컷."},
+    {id:"ab1",ko:"그릭요거트 + 과일 + 그래놀라",en:"Yogurt bowl",plate:"🥛🍓",prep:"3분",shared:true,extra:["그래놀라"],
+      ing:["플레인 그릭요거트","과일","그래놀라"],
+      steps:["요거트에 과일·그래놀라를 올려요."],
+      tip:"제일린과 요거트·과일 공유."},
+    {id:"ab2",ko:"스크램블에그 + 토스트",en:"Scrambled eggs + toast",plate:"🍳🍞",prep:"7분",shared:true,extra:[],
+      ing:["계란 2개","식빵","버터","우유 약간"],
+      steps:["계란에 우유를 섞어 부드럽게 스크램블.","토스트와 함께."],
+      tip:"단백질 있는 가벼운 아침."},
+    {id:"ab3",ko:"아보카도 토스트 + 계란",en:"Avocado toast + egg",plate:"🥑🍞🍳",prep:"8분",shared:true,extra:[],
+      ing:["식빵","아보카도","계란","소금·후추"],
+      steps:["빵을 구워 으깬 아보카도를 발라요.","계란후라이를 올려요."],
+      tip:"포만감 좋은 가벼운 아침."},
+    {id:"ab4",ko:"과일 + 커피 (간단)",en:"Fruit + coffee (grab & go)",plate:"🍌☕",prep:"2분",shared:true,extra:[],
+      ing:["바나나·사과 등 과일","커피 또는 우유"],
+      steps:["과일과 커피로 간단히 시작해요."],
+      tip:"바쁜 아침 초간단."},
+    {id:"ab5",ko:"오트밀 / 시리얼",en:"Oatmeal / cereal",plate:"🥣",prep:"5분",shared:true,extra:["시리얼(선택)"],
+      ing:["오트밀 또는 시리얼","우유","바나나·베리"],
+      steps:["오트밀을 데우거나 시리얼에 우유를 부어요.","과일을 올려요."],
+      tip:"제일린 오트밀과 공유."},
+    {id:"ab6",ko:"계란 샌드위치",en:"Egg sandwich",plate:"🥪",prep:"8분",shared:true,extra:[],
+      ing:["식빵","계란","상추·토마토","마요 약간"],
+      steps:["계란을 부쳐요.","빵에 채소와 함께 끼워요."],
+      tip:"들고 나가기 좋은 아침."}
+  ],
+  lunch:[
+    {id:"al0",ko:"비빔밥",en:"Bibimbap",plate:"🍚🥕🌶️",prep:"15분",shared:true,extra:["고추장"],
+      ing:["밥","시금치·당근·애호박 나물","계란후라이","고추장","참기름","소고기볶음(선택)"],
+      steps:["채소를 각각 볶거나 무쳐요.","밥 위에 올려요.","계란·고추장·참기름을 넣어 비벼요."],
+      tip:"냉장고 나물 정리에 딱 — 제일린 채소와 공유."},
+    {id:"al1",ko:"김치찌개 + 밥",en:"Kimchi stew + rice",plate:"🍲🌶️",prep:"25분",shared:true,extra:["김치","돼지고기","고춧가루","대파"],
+      ing:["익은 김치","돼지고기(목살)","두부","대파","고춧가루","밥"],
+      steps:["김치·돼지고기를 볶아요.","물을 붓고 끓여요.","두부·대파를 넣어 마무리."],
+      tip:"묵은지일수록 맛있어요."},
+    {id:"al2",ko:"제육덮밥",en:"Spicy pork bowl",plate:"🍚🐷🌶️",prep:"20분",shared:false,extra:["돼지고기","고추장","고춧가루","간장","마늘","상추"],
+      ing:["돼지고기","고추장·고춧가루·간장·마늘","양파","밥","상추"],
+      steps:["양념에 돼지고기를 재워요.","센 불에 볶아요.","밥에 올려 상추쌈으로."],
+      tip:"양념 넉넉히 만들어두면 편해요."},
+    {id:"al3",ko:"소고기 뭇국 + 밥",en:"Beef radish soup + rice",plate:"🍲🥩",prep:"25분",shared:true,extra:["무","국간장","대파"],
+      ing:["소고기","무","국간장","대파","참기름","밥"],
+      steps:["소고기·무를 참기름에 볶아요.","물을 붓고 끓여요.","국간장으로 간, 대파 마무리."],
+      tip:"소고기는 제일린과 공유(간 전에 덜어내기)."},
+    {id:"al4",ko:"잔치국수",en:"Warm noodle soup",plate:"🍜",prep:"15분",shared:true,extra:["소면","국간장","김"],
+      ing:["소면","다시마·멸치육수","계란지단·애호박·김","국간장"],
+      steps:["육수를 끓여 국간장으로 간해요.","소면을 삶아 헹궈요.","고명을 올려 육수를 부어요."],
+      tip:"육수는 제일린 국물 만들 때 같이."},
+    {id:"al5",ko:"참치김치찌개 + 밥",en:"Tuna-kimchi stew",plate:"🍲🐟🌶️",prep:"20분",shared:true,extra:["참치캔","김치","고춧가루","대파"],
+      ing:["참치캔","익은 김치","두부","대파","고춧가루","밥"],
+      steps:["김치를 볶다 물을 부어요.","참치·두부를 넣어 끓여요.","대파 마무리."],
+      tip:"고기 없이 빠르게."},
+    {id:"al6",ko:"두부조림 + 계란 + 밥",en:"Braised tofu + egg",plate:"🍚🧈",prep:"18분",shared:true,extra:["간장","고춧가루","마늘","대파"],
+      ing:["두부","간장·고춧가루·마늘·대파","계란","밥"],
+      steps:["두부를 노릇하게 지져요.","양념장을 올려 자작하게 조려요.","계란·밥과 내요."],
+      tip:"두부는 제일린과 공유."},
+    {id:"al7",ko:"오징어덮밥",en:"Spicy squid bowl",plate:"🍚🦑🌶️",prep:"20분",shared:false,extra:["오징어","고추장","고춧가루","간장"],
+      ing:["오징어","양파·애호박","고추장·고춧가루·간장","밥"],
+      steps:["오징어·채소를 양념에 볶아요.","밥에 올려요."],
+      tip:"매콤한 별미."}
+  ],
+  dinnerWeek:[
+    {id:"adw0",ko:"된장찌개 + 밥",en:"Doenjang stew + rice",plate:"🍲",prep:"20분",shared:true,extra:["된장","고춧가루","대파"],
+      ing:["된장","애호박·감자·두부·양파","다시마·멸치육수","고춧가루","대파"],
+      steps:["육수에 된장을 풀어요.","채소·두부를 넣어 끓여요.","고춧가루·대파 마무리."],
+      tip:"기본 반찬과 함께 — 채소는 제일린 공유."},
+    {id:"adw1",ko:"순두부찌개",en:"Soft-tofu stew",plate:"🍲🌶️",prep:"20분",shared:true,extra:["고춧가루","마늘","대파","김치"],
+      ing:["순두부","김치 또는 해물","고춧가루·마늘","계란","대파","밥"],
+      steps:["김치/해물을 볶고 물을 부어요.","순두부를 넣어 끓여요.","계란을 깨 넣고 대파 마무리."],
+      tip:"제일린 연두부와 같은 재료."},
+    {id:"adw2",ko:"제육볶음 + 상추쌈",en:"Spicy pork + ssam",plate:"🐷🌶️",prep:"20분",shared:false,extra:["돼지고기","고추장","고춧가루","간장","마늘","상추","쌈장"],
+      ing:["돼지고기","고추장·고춧가루·간장·마늘","양파","상추·쌈장"],
+      steps:["양념에 고기를 재워 센 불에 볶아요.","상추·쌈장과 쌈 싸 먹어요."],
+      tip:"밥도둑 대표 메뉴."},
+    {id:"adw3",ko:"연어구이 + 미역국 + 밥",en:"Salmon + seaweed soup",plate:"🐟🌿",prep:"25분",shared:true,extra:["국간장"],
+      ing:["연어","소금·후추","미역","소고기 약간","국간장","밥"],
+      steps:["연어를 소금·후추로 구워요.","미역국을 끓여 국간장 간.","밥과 함께 내요."],
+      tip:"연어·미역·소고기 모두 제일린 공유."},
+    {id:"adw4",ko:"소고기 미역국 + 계란찜 + 밥",en:"Beef seaweed soup + egg custard",plate:"🍲🥩",prep:"25분",shared:true,extra:["국간장"],
+      ing:["소고기","미역","참기름·국간장","계란(찜)","밥"],
+      steps:["미역·소고기를 참기름에 볶아 끓여요.","국간장으로 간해요.","계란찜을 곁들여요."],
+      tip:"제일린 무염 버전 먼저 덜고 어른 간."},
+    {id:"adw5",ko:"닭갈비",en:"Dak-galbi (spicy chicken)",plate:"🐔🌶️",prep:"25분",shared:true,extra:["닭다리살","고추장","고춧가루","간장","마늘","양배추"],
+      ing:["닭다리살","고추장·고춧가루·간장·마늘","양배추·양파·고구마","떡(선택)"],
+      steps:["양념에 닭을 재워요.","채소와 함께 볶아요.","떡을 넣어 마무리(선택)."],
+      tip:"고구마·양파는 제일린 공유."},
+    {id:"adw6",ko:"고등어구이 + 된장국 + 밥",en:"Grilled mackerel + soup",plate:"🐟🍚",prep:"20분",shared:true,extra:["고등어","된장"],
+      ing:["고등어","소금","된장국(두부·애호박)","밥"],
+      steps:["고등어에 소금을 뿌려 노릇하게 구워요.","된장국을 끓여요.","밥·반찬과 내요."],
+      tip:"등푸른생선 오메가3 보충."},
+    {id:"adw7",ko:"콩나물국 + 계란말이 + 밥",en:"Bean sprout soup + omelette",plate:"🍲🍳",prep:"18분",shared:true,extra:["콩나물","마늘","대파","국간장"],
+      ing:["콩나물","다시마·멸치육수","마늘·대파·국간장","계란","밥"],
+      steps:["콩나물을 육수에 끓여요(뚜껑 열지 않기).","국간장·마늘·대파로 간해요.","계란말이·밥과 내요."],
+      tip:"속이 편한 저녁."},
+    {id:"adw8",ko:"스파게티 미트소스",en:"Spaghetti Bolognese",plate:"🍝",prep:"25분",shared:true,extra:["스파게티면","토마토소스(또는 캔토마토)"],
+      ing:["다진 소고기","양파·마늘","토마토소스/캔토마토","스파게티면","올리브유"],
+      steps:["소고기·양파·마늘을 볶아요.","토마토소스를 넣어 뭉근히 끓여요.","삶은 면과 버무려요."],
+      tip:"🍔 가끔 즐기는 미국식 — 제일린용은 간·소스 약하게 덜어 만들어요."},
+    {id:"adw9",ko:"치킨 타코",en:"Chicken tacos",plate:"🌮",prep:"20분",shared:true,extra:["토르티야","살사","라임"],
+      ing:["닭가슴/다리살","양파·피망","커민·파프리카·소금","토르티야","양상추·토마토"],
+      steps:["닭을 향신료에 볶아요.","토르티야에 채소와 함께 싸요."],
+      tip:"🍔 미국식 별미 — 아이는 순한 버전으로."}
+  ],
+  dinnerWeekend:[
+    {id:"awe0",ko:"갈비찜",en:"Braised short ribs",plate:"🥩🍯",prep:"90분",shared:false,extra:["소갈비","간장","배","마늘","표고"],
+      ing:["소갈비","간장·배·양파·마늘·설탕","당근·감자·표고","밤·대추(선택)"],
+      steps:["갈비를 데쳐 핏물을 빼요.","양념에 1시간 이상 조려요.","채소를 넣어 부드럽게 익혀요."],
+      tip:"주말 특식 — 넉넉히 해 다음 날도."},
+    {id:"awe1",ko:"불고기 + 잡채 + 쌈",en:"Bulgogi + japchae",plate:"🥩🍜",prep:"45분",shared:true,extra:["불고기감 소고기","간장","배","당면","상추"],
+      ing:["소고기(불고기감)","간장·배·마늘·설탕·참기름","당면·시금치·당근·양파","상추"],
+      steps:["불고기를 양념에 재워 볶아요.","당면·채소로 잡채를 무쳐요.","쌈과 함께 내요."],
+      tip:"손님상에도 좋아요 — 시금치·당근 공유."},
+    {id:"awe2",ko:"삼겹살 구이 + 쌈 (홈 BBQ)",en:"Pork belly BBQ at home",plate:"🐷🔥",prep:"30분",shared:false,extra:["삼겹살","쌈채소","쌈장","마늘","김치"],
+      ing:["삼겹살","쌈채소·마늘·쌈장·기름장","김치","밥 또는 냉면"],
+      steps:["삼겹살을 노릇하게 구워요.","마늘·김치를 함께 구워요.","쌈채소에 싸 먹어요."],
+      tip:"집에서 즐기는 외식 느낌."},
+    {id:"awe3",ko:"찜닭",en:"Jjimdak (braised chicken)",plate:"🐔🍜",prep:"50분",shared:true,extra:["닭","간장","당면","마늘"],
+      ing:["닭","간장·설탕·마늘·생강","감자·당근·양파·당면","청양고추(선택)"],
+      steps:["닭을 데쳐요.","양념·채소와 함께 조려요.","당면을 넣어 마무리."],
+      tip:"감자·당근은 제일린 공유."},
+    {id:"awe4",ko:"해물순두부 + 파전",en:"Seafood tofu stew + pancake",plate:"🍲🦐",prep:"45분",shared:false,extra:["해물","고춧가루","부침가루","쪽파"],
+      ing:["순두부","해물(새우·오징어·조개)","고춧가루·마늘","부침가루·쪽파(전)"],
+      steps:["해물순두부를 얼큰하게 끓여요.","파전 반죽을 부쳐요.","함께 즐겨요."],
+      tip:"비 오는 날 최고의 조합."},
+    {id:"awe5",ko:"갈비탕",en:"Short rib soup",plate:"🍲🥩",prep:"120분",shared:false,extra:["소갈비","무","국간장","당면"],
+      ing:["소갈비","무·대파·마늘","국간장·소금","당면·밥"],
+      steps:["갈비를 데쳐 오래 푹 끓여요.","무·대파로 국물을 내요.","국간장·소금 간, 밥과 내요."],
+      tip:"푹 끓인 보양식 — 주말에 여유롭게."},
+    {id:"awe6",ko:"홈메이드 버거 + 감자",en:"Homemade burgers + fries",plate:"🍔🍟",prep:"35분",shared:false,extra:["번(버거빵)","다진 소고기","감자","양상추·토마토·양파"],
+      ing:["다진 소고기 패티","번","양상추·토마토·양파","감자","케첩·머스타드"],
+      steps:["패티를 도톰하게 구워요.","감자를 오븐/에어프라이로 구워요.","번에 채소와 함께 쌓아요."],
+      tip:"🍔 주말 미국식 별미."},
+    {id:"awe7",ko:"바비큐 폭립 + 코울슬로",en:"BBQ ribs + coleslaw",plate:"🍖🥗",prep:"120분",shared:false,extra:["돼지 폭립","바비큐소스","양배추(코울슬로)"],
+      ing:["돼지 폭립","바비큐소스·러브","양배추·당근(코울슬로)"],
+      steps:["립에 러브를 발라 오븐에 저온으로 익혀요.","바비큐소스를 발라 마무리해요.","코울슬로를 곁들여요."],
+      tip:"🍔 주말 프로젝트 요리 — 넉넉히 구워도 좋아요."}
+  ]
+};
+
+/* ===== EAT-OUT ideas + real OC spots (verify hours/reviews before going) ===== */
+const EATOUT=[
+  {idea:"한식 BBQ 🔥 삼겹살·갈비",dish:"삼겹살, 양념갈비, 된장찌개",kid:"아이 동반 OK (넓고 활기참)",spots:["Kang Hodong Baekjeong — Buena Park","Gen Korean BBQ — Buena Park","Grams KBBQ — Garden Grove"]},
+  {idea:"순두부·찌개 🍲",dish:"순두부찌개, 갈비탕, 돌솥밥",kid:"아이 동반 OK",spots:["Kaju Soft Tofu — Garden Grove","Cham Soot Gol — Garden Grove"]},
+  {idea:"칼국수·손만두 🍜",dish:"칼국수, 손만두, 콩국수(여름)",kid:"아이 동반 OK",spots:["Hangari Kalguksu — Garden Grove","Myung In Dumplings — Garden Grove","MDK Noodles — Garden Grove"]},
+  {idea:"국밥 🍲 돼지국밥·설렁탕",dish:"돼지국밥, 순대국, 설렁탕",kid:"아이 동반 OK",spots:["Jinsol Gukbap — Buena Park","Yoon Busan Gukbap — Garden Grove"]},
+  {idea:"치킨 🍗 양념·후라이드",dish:"양념치킨, 후라이드, 치맥",kid:"포장 추천",spots:["bb.q Chicken — Buena Park/Fullerton","Pelicana Chicken — Fullerton"]},
+  {idea:"떡볶이·분식 🌶️",dish:"떡볶이, 김밥, 튀김, 라볶이",kid:"아이 동반 OK",spots:["Yupdduk — Buena Park (매움)","Dookki 떡볶이 뷔페 — Fullerton"]},
+  {idea:"감자탕·뼈해장국 🍲",dish:"감자탕, 뼈해장국",kid:"아이 동반 OK",spots:["Gam Ja Tang House — Garden Grove"]},
+  {idea:"미국식 🍔 가끔 기분전환",dish:"버거, 브런치, 스테이크",kid:"가족: Tangaroa·Great Maple / 데이트: The Ranch",spots:["Tangaroa Terrace — Anaheim (버거·가족)","Great Maple — Anaheim (브런치)","THE RANCH — Anaheim (스테이크·데이트)","Bosscat Kitchen — Orange (남부식·브런치)"]},
+  {idea:"기분전환 🌏 베트남·일식",dish:"쌀국수(pho), 스시, 라멘",kid:"아이 동반 OK",spots:["Quan Hy — Vietnamese, Garden Grove","Kitakata Ramen Ban Nai — Fountain Valley"]}
+];
+
+/* ===== adult 2-week extra shopping (staples you keep can be skipped) ===== */
+const ADULT_EXTRAS=["김치","고추장","고춧가루","간장·국간장","된장","마늘","대파·쪽파","돼지고기(목살/삼겹살)","소면·당면","참치캔","콩나물","상추·쌈채소","쌈장","김·김가루","마요네즈","무","계란(추가)","두부(추가)","스파게티면·토마토소스","토르티야·살사","버거번·감자"];
+
 /* ===== persistence (standalone: localStorage; preview: memory fallback) ===== */
 const store={};
 (function(){try{for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);store[k]=localStorage.getItem(k);}}catch(e){}})();
@@ -534,7 +717,7 @@ function renderPlan(){
   SLOTORDER.forEach(s=>mealFor(selected,s).tags.forEach(t=>covered.add(t)));
   document.getElementById("nutriChips").innerHTML=CORE.map(t=>`<span class="chip ${covered.has(t)?'on':''}">${NUTRI[t]} ${t}${covered.has(t)?' ✓':''}</span>`).join("");
   document.getElementById("todayLine").textContent=`${today.getFullYear()}. ${today.getMonth()+1}. ${today.getDate()} (${KDAYS[today.getDay()]}) · 오늘`;
-  renderWeek();renderWell();renderShop();
+  renderWeek();renderWell();renderShop();if(typeof mode!=="undefined"&&mode==="adult")renderAdult();
 }
 
 /* ===== well-eaten log ===== */
@@ -654,7 +837,65 @@ document.getElementById("importInput").addEventListener("change",e=>{
 });
 if("serviceWorker" in navigator){window.addEventListener("load",()=>{navigator.serviceWorker.register("service-worker.js").catch(()=>{});});}
 
-renderPlan();
+/* ===== adults + eat-out ===== */
+let mode=sGet("mode")||"baby";
+function adultMealFor(date,slot){
+  const i=dayIndex(date);
+  if(slot==="breakfast")return A.breakfast[(i%A.breakfast.length+A.breakfast.length)%A.breakfast.length];
+  if(slot==="lunch")return A.lunch[((i+2)%A.lunch.length+A.lunch.length)%A.lunch.length];
+  const wknd=(date.getDay()===0||date.getDay()===6),arr=wknd?A.dinnerWeekend:A.dinnerWeek;
+  return arr[(i%arr.length+arr.length)%arr.length];
+}
+function adultCard(slot,label,timeLabel){
+  const m=adultMealFor(selected,slot);
+  return `<div class="slot ${slot}"><span class="time">${timeLabel}</span><span class="node"></span>
+    <details class="meal ${slot}"><summary><div class="plate">${m.plate}</div>
+    <div class="meal-info"><div class="cat">${label}</div>
+    <div class="name">${m.ko}${m.prep?` <span class="badge">${m.prep}</span>`:""} <span class="en">${m.en}</span></div>
+    <div class="serve">${m.shared?"🛒 공유 재료 (제일린 장보기 활용)":"➕ 추가 재료 필요"}</div></div>
+    <span class="chev">▼</span></summary>
+    <div class="recipe"><h4>🧺 재료 · Ingredients</h4><ul>${m.ing.map(x=>`<li>${x}</li>`).join("")}</ul>
+    <h4>👩‍🍳 만드는 법 · Method</h4><ol>${m.steps.map(x=>`<li>${x}</li>`).join("")}</ol>
+    ${m.extra&&m.extra.length?`<div class="usnote">➕ 추가 장보기 · Extra: ${m.extra.join(", ")}</div>`:""}
+    <div class="tip">💡 ${m.tip}</div></div></details></div>`;
+}
+function renderAdult(){
+  const wknd=(selected.getDay()===0||selected.getDay()===6);
+  document.getElementById("adultPlan").innerHTML=
+    `<div class="plan-head"><span class="d">어른 식단 · Adults</span><span class="sub">${selected.getMonth()+1}/${selected.getDate()} (${KDAYS[selected.getDay()]}) · 2인</span></div>`+
+    `<div class="hint">${wknd?"🌿 주말 · 여유로운 상차림":"⚡ 평일 · 빠르게"} · 한식 위주</div>`+
+    `<div class="timeline">`+adultCard("breakfast","아침 (가볍게) · Light","아침")+adultCard("lunch","점심 · Lunch","점심")+adultCard("dinner","저녁 · Dinner","저녁")+`</div>`;
+  renderEatout();renderAdultExtras();
+}
+function renderEatout(){
+  const i=dayIndex(selected),period=Math.floor(i/14),off=parseInt(sGet("eatout_off")||"0",10);
+  const e=EATOUT[((period+off)%EATOUT.length+EATOUT.length)%EATOUT.length];
+  document.getElementById("eatoutCard").innerHTML=
+    `<h3>🍽️ 이번 외식 추천 · Eat-out (2–3주마다)</h3>
+     <div class="big">${e.idea}</div><div class="dish">추천 메뉴: ${e.dish}</div>
+     <div class="spots">${e.spots.map(s=>`<div class="spot">📍 ${s}</div>`).join("")}</div>
+     <div class="kid">${e.kid} · 방문 전 영업시간·리뷰 확인하세요</div>
+     <button class="mbtn more" id="eatoutMore">↻ 다른 추천 보기</button>`;
+}
+function renderAdultExtras(){
+  document.getElementById("adultExtras").innerHTML=
+    `<details class="panel"><summary>🛒 어른 2주 추가 장보기 · Adult extras</summary>
+     <div class="shop">${ADULT_EXTRAS.map(x=>`<button class="shopitem">${x}</button>`).join("")}
+     <p class="shopnote">제일린 장보기 + 위 재료 = 온 가족 2주치 · 상비 양념은 있으면 생략</p></div></details>`;
+}
+function applyMode(){
+  document.getElementById("modeBaby").classList.toggle("on",mode==="baby");
+  document.getElementById("modeAdult").classList.toggle("on",mode==="adult");
+  document.querySelectorAll(".baby-only").forEach(el=>{el.style.display=mode==="baby"?"":"none";});
+  document.getElementById("adultWrap").style.display=mode==="adult"?"block":"none";
+  if(mode==="adult")renderAdult();
+}
+document.getElementById("modeBaby").onclick=()=>{mode="baby";sSet("mode","baby");applyMode();};
+document.getElementById("modeAdult").onclick=()=>{mode="adult";sSet("mode","adult");applyMode();};
+document.getElementById("adultExtras").addEventListener("click",e=>{const b=e.target.closest(".shopitem");if(b)b.classList.toggle("got");});
+document.getElementById("eatoutCard").addEventListener("click",e=>{if(e.target.closest("#eatoutMore")){sSet("eatout_off",String(parseInt(sGet("eatout_off")||"0",10)+1));renderEatout();}});
+
+renderPlan();applyMode();
 </script>
 </body>
 </html>
